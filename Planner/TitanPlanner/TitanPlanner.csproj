@@ -140,5 +140,8 @@
   <ItemGroup>
     <None Include="Resources\VelocityVortexField_1.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\VelocityVortexField_2.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
