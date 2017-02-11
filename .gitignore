@@ -259,7 +259,6 @@ __pycache__/
 *.class
 
 # Generated files
-bin/
 gen/
 out/
 
