@@ -1,0 +1,15 @@
+E:\Programs\TitanPlanner\TitanPlanner\bin\Release\TitanPlanner.exe.config
+E:\Programs\TitanPlanner\TitanPlanner\bin\Release\TitanPlanner.exe
+E:\Programs\TitanPlanner\TitanPlanner\bin\Release\TitanPlanner.pdb
+E:\Programs\TitanPlanner\TitanPlanner\bin\Release\Newtonsoft.Json.dll
+E:\Programs\TitanPlanner\TitanPlanner\bin\Release\Newtonsoft.Json.pdb
+E:\Programs\TitanPlanner\TitanPlanner\bin\Release\Newtonsoft.Json.xml
+E:\Programs\TitanPlanner\TitanPlanner\obj\Release\TitanPlanner.DecisionSettings.resources
+E:\Programs\TitanPlanner\TitanPlanner\obj\Release\TitanPlanner.MainApp.resources
+E:\Programs\TitanPlanner\TitanPlanner\obj\Release\TitanPlanner.NewFile.resources
+E:\Programs\TitanPlanner\TitanPlanner\obj\Release\TitanPlanner.Properties.Resources.resources
+E:\Programs\TitanPlanner\TitanPlanner\obj\Release\TitanPlanner.RotationSettings.resources
+E:\Programs\TitanPlanner\TitanPlanner\obj\Release\TitanPlanner.WaypointSettings.resources
+E:\Programs\TitanPlanner\TitanPlanner\obj\Release\TitanPlanner.csproj.GenerateResource.Cache
+E:\Programs\TitanPlanner\TitanPlanner\obj\Release\TitanPlanner.exe
+E:\Programs\TitanPlanner\TitanPlanner\obj\Release\TitanPlanner.pdb
