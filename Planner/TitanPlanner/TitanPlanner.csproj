@@ -81,6 +81,12 @@
       <DependentUpon>RotationSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Step.cs" />
+    <Compile Include="TitanLogger.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TitanLogger.Designer.cs">
+      <DependentUpon>TitanLogger.cs</DependentUpon>
+    </Compile>
     <Compile Include="WaypointSettings.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -108,6 +114,9 @@
     </Compile>
     <EmbeddedResource Include="RotationSettings.resx">
       <DependentUpon>RotationSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="TitanLogger.resx">
+      <DependentUpon>TitanLogger.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="WaypointSettings.resx">
       <DependentUpon>WaypointSettings.cs</DependentUpon>

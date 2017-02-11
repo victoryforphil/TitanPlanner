@@ -41,7 +41,7 @@ public class TitanPlanner extends LinearOpMode {
         while (opModeIsActive()) {
             telemetry.addData("Status", "Run Time: " + runtime.toString());
             telemetry.update();
-                       Logger.SendData("RUNTIME", runtime.toString());
+            Logger.SendData("RUNTIME", runtime.toString());
 
         }
     }

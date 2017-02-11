@@ -71,7 +71,7 @@
             this.Controls.Add(this.listBox_logs);
             this.Name = "TitanLogger";
             this.Text = "TitanLogger";
-            this.Load += new System.EventHandler(this.TitanLogger_Load);
+
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -7,6 +7,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -271,6 +272,16 @@ namespace TitanPlanner
                 Console.WriteLine("The file could not be read:");
                 Console.WriteLine(e2.Message);
             }
+           
+        }
+
+        private void button_logger_Click(object sender, EventArgs e)
+        {
+            TitanLogger logger = new TitanLogger();
+            logger.Show();
+        }
+        private void Launch()
+        {
            
         }
     }

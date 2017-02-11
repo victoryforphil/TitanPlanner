@@ -44,6 +44,7 @@
             this.label_ticksPerUnit = new System.Windows.Forms.Label();
             this.button_import = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.button_logger = new System.Windows.Forms.Button();
             this.groupBox_Map.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nud_TicksPerMeter)).BeginInit();
@@ -206,11 +207,22 @@
             this.openFileDialog1.FileName = "openFileDialog1";
             this.openFileDialog1.FileOk += new System.ComponentModel.CancelEventHandler(this.openFileDialog1_FileOk);
             // 
+            // button_logger
+            // 
+            this.button_logger.Location = new System.Drawing.Point(668, 734);
+            this.button_logger.Name = "button_logger";
+            this.button_logger.Size = new System.Drawing.Size(75, 23);
+            this.button_logger.TabIndex = 16;
+            this.button_logger.Text = "Logger";
+            this.button_logger.UseVisualStyleBackColor = true;
+            this.button_logger.Click += new System.EventHandler(this.button_logger_Click);
+            // 
             // MainApp
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(957, 765);
+            this.Controls.Add(this.button_logger);
             this.Controls.Add(this.button_import);
             this.Controls.Add(this.label_ticksPerUnit);
             this.Controls.Add(this.numericUpDown1);
@@ -254,5 +266,6 @@
         private System.Windows.Forms.Label label_ticksPerUnit;
         private System.Windows.Forms.Button button_import;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.Button button_logger;
     }
 }
