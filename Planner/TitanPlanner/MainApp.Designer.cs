@@ -28,7 +28,6 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.groupBox_Map = new System.Windows.Forms.GroupBox();
             this.treeView_steps = new System.Windows.Forms.TreeView();
             this.button_newStep = new System.Windows.Forms.Button();
             this.comboBox_StepType = new System.Windows.Forms.ComboBox();
@@ -44,29 +43,18 @@
             this.button_import = new System.Windows.Forms.Button();
             this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
             this.button_logger = new System.Windows.Forms.Button();
+            this.button_delete = new System.Windows.Forms.Button();
             this.pictureBox_Map = new System.Windows.Forms.PictureBox();
-            this.groupBox_Map.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.nud_TicksPerMeter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).BeginInit();
             this.SuspendLayout();
             // 
-            // groupBox_Map
-            // 
-            this.groupBox_Map.Controls.Add(this.pictureBox_Map);
-            this.groupBox_Map.Location = new System.Drawing.Point(2, 5);
-            this.groupBox_Map.Name = "groupBox_Map";
-            this.groupBox_Map.Size = new System.Drawing.Size(539, 550);
-            this.groupBox_Map.TabIndex = 0;
-            this.groupBox_Map.TabStop = false;
-            this.groupBox_Map.Text = "Map";
-            this.groupBox_Map.Enter += new System.EventHandler(this.groupBox_Map_Enter);
-            // 
             // treeView_steps
             // 
-            this.treeView_steps.Location = new System.Drawing.Point(550, 81);
+            this.treeView_steps.Location = new System.Drawing.Point(550, 112);
             this.treeView_steps.Name = "treeView_steps";
-            this.treeView_steps.Size = new System.Drawing.Size(196, 374);
+            this.treeView_steps.Size = new System.Drawing.Size(196, 300);
             this.treeView_steps.TabIndex = 2;
             this.treeView_steps.NodeMouseClick += new System.Windows.Forms.TreeNodeMouseClickEventHandler(this.treeView_steps_NodeMouseClick);
             // 
@@ -114,9 +102,9 @@
             // 
             // button_export
             // 
-            this.button_export.Location = new System.Drawing.Point(550, 498);
+            this.button_export.Location = new System.Drawing.Point(550, 462);
             this.button_export.Name = "button_export";
-            this.button_export.Size = new System.Drawing.Size(196, 33);
+            this.button_export.Size = new System.Drawing.Size(196, 37);
             this.button_export.TabIndex = 9;
             this.button_export.Text = "Export";
             this.button_export.UseVisualStyleBackColor = true;
@@ -131,7 +119,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(9, 560);
+            this.label3.Location = new System.Drawing.Point(3, 532);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(82, 13);
             this.label3.TabIndex = 10;
@@ -144,7 +132,7 @@
             0,
             0,
             0});
-            this.nud_TicksPerMeter.Location = new System.Drawing.Point(97, 558);
+            this.nud_TicksPerMeter.Location = new System.Drawing.Point(91, 530);
             this.nud_TicksPerMeter.Maximum = new decimal(new int[] {
             10000,
             0,
@@ -157,7 +145,7 @@
             // 
             // numericUpDown1
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(304, 558);
+            this.numericUpDown1.Location = new System.Drawing.Point(298, 530);
             this.numericUpDown1.Name = "numericUpDown1";
             this.numericUpDown1.Size = new System.Drawing.Size(120, 20);
             this.numericUpDown1.TabIndex = 13;
@@ -166,7 +154,7 @@
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(231, 560);
+            this.label4.Location = new System.Drawing.Point(225, 532);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(60, 13);
             this.label4.TabIndex = 12;
@@ -175,7 +163,7 @@
             // label_ticksPerUnit
             // 
             this.label_ticksPerUnit.AutoSize = true;
-            this.label_ticksPerUnit.Location = new System.Drawing.Point(455, 560);
+            this.label_ticksPerUnit.Location = new System.Drawing.Point(449, 532);
             this.label_ticksPerUnit.Name = "label_ticksPerUnit";
             this.label_ticksPerUnit.Size = new System.Drawing.Size(86, 13);
             this.label_ticksPerUnit.TabIndex = 14;
@@ -183,9 +171,9 @@
             // 
             // button_import
             // 
-            this.button_import.Location = new System.Drawing.Point(550, 461);
+            this.button_import.Location = new System.Drawing.Point(550, 418);
             this.button_import.Name = "button_import";
-            this.button_import.Size = new System.Drawing.Size(196, 31);
+            this.button_import.Size = new System.Drawing.Size(196, 38);
             this.button_import.TabIndex = 15;
             this.button_import.Text = "Import";
             this.button_import.UseVisualStyleBackColor = true;
@@ -198,7 +186,7 @@
             // 
             // button_logger
             // 
-            this.button_logger.Location = new System.Drawing.Point(550, 537);
+            this.button_logger.Location = new System.Drawing.Point(550, 505);
             this.button_logger.Name = "button_logger";
             this.button_logger.Size = new System.Drawing.Size(196, 35);
             this.button_logger.TabIndex = 16;
@@ -206,13 +194,22 @@
             this.button_logger.UseVisualStyleBackColor = true;
             this.button_logger.Click += new System.EventHandler(this.button_logger_Click);
             // 
+            // button_delete
+            // 
+            this.button_delete.Location = new System.Drawing.Point(550, 83);
+            this.button_delete.Name = "button_delete";
+            this.button_delete.Size = new System.Drawing.Size(93, 23);
+            this.button_delete.TabIndex = 17;
+            this.button_delete.Text = "Delete Step";
+            this.button_delete.UseVisualStyleBackColor = true;
+            // 
             // pictureBox_Map
             // 
             this.pictureBox_Map.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pictureBox_Map.Image = global::TitanPlanner.Properties.Resources.VelocityVortexField_2;
-            this.pictureBox_Map.Location = new System.Drawing.Point(7, 20);
+            this.pictureBox_Map.Location = new System.Drawing.Point(0, -1);
             this.pictureBox_Map.Name = "pictureBox_Map";
-            this.pictureBox_Map.Size = new System.Drawing.Size(525, 525);
+            this.pictureBox_Map.Size = new System.Drawing.Size(535, 525);
             this.pictureBox_Map.TabIndex = 0;
             this.pictureBox_Map.TabStop = false;
             this.pictureBox_Map.Click += new System.EventHandler(this.pictureBox_Map_Click);
@@ -221,7 +218,9 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(763, 592);
+            this.ClientSize = new System.Drawing.Size(760, 551);
+            this.Controls.Add(this.pictureBox_Map);
+            this.Controls.Add(this.button_delete);
             this.Controls.Add(this.button_logger);
             this.Controls.Add(this.button_import);
             this.Controls.Add(this.label_ticksPerUnit);
@@ -235,11 +234,9 @@
             this.Controls.Add(this.comboBox_StepType);
             this.Controls.Add(this.button_newStep);
             this.Controls.Add(this.treeView_steps);
-            this.Controls.Add(this.groupBox_Map);
             this.Name = "MainApp";
             this.Text = "MainApp";
             this.Load += new System.EventHandler(this.MainApp_Load);
-            this.groupBox_Map.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.nud_TicksPerMeter)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox_Map)).EndInit();
@@ -249,9 +246,6 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.GroupBox groupBox_Map;
-        private System.Windows.Forms.PictureBox pictureBox_Map;
         private System.Windows.Forms.TreeView treeView_steps;
         private System.Windows.Forms.Button button_newStep;
         private System.Windows.Forms.ComboBox comboBox_StepType;
@@ -267,5 +261,7 @@
         private System.Windows.Forms.Button button_import;
         private System.Windows.Forms.OpenFileDialog openFileDialog1;
         private System.Windows.Forms.Button button_logger;
+        private System.Windows.Forms.Button button_delete;
+        private System.Windows.Forms.PictureBox pictureBox_Map;
     }
 }

@@ -38,8 +38,9 @@ public class TCPClient {
      */
     public void sendMessage(String message) {
         if (mBufferOut != null && !mBufferOut.checkError()) {
-            mBufferOut.println(message);
+            mBufferOut.print(message);
             mBufferOut.flush();
+
         }
     }
 

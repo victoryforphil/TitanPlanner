@@ -31,6 +31,7 @@
             this.listBox_logs = new System.Windows.Forms.ListBox();
             this.label_phonestatus = new System.Windows.Forms.Label();
             this.label_serverstatus = new System.Windows.Forms.Label();
+            this.button_start = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // listBox_logs
@@ -40,6 +41,7 @@
             this.listBox_logs.Name = "listBox_logs";
             this.listBox_logs.Size = new System.Drawing.Size(439, 524);
             this.listBox_logs.TabIndex = 0;
+            this.listBox_logs.SelectedIndexChanged += new System.EventHandler(this.listBox_logs_SelectedIndexChanged);
             // 
             // label_phonestatus
             // 
@@ -61,17 +63,27 @@
             this.label_serverstatus.Text = "label1";
             this.label_serverstatus.Click += new System.EventHandler(this.label_serverstatus_Click);
             // 
+            // button_start
+            // 
+            this.button_start.Location = new System.Drawing.Point(186, 543);
+            this.button_start.Name = "button_start";
+            this.button_start.Size = new System.Drawing.Size(75, 23);
+            this.button_start.TabIndex = 3;
+            this.button_start.Text = "Start Server";
+            this.button_start.UseVisualStyleBackColor = true;
+            this.button_start.Click += new System.EventHandler(this.button_start_Click);
+            // 
             // TitanLogger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(884, 563);
+            this.ClientSize = new System.Drawing.Size(483, 576);
+            this.Controls.Add(this.button_start);
             this.Controls.Add(this.label_serverstatus);
             this.Controls.Add(this.label_phonestatus);
             this.Controls.Add(this.listBox_logs);
             this.Name = "TitanLogger";
             this.Text = "TitanLogger";
-
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -82,5 +94,6 @@
         private System.Windows.Forms.ListBox listBox_logs;
         private System.Windows.Forms.Label label_phonestatus;
         private System.Windows.Forms.Label label_serverstatus;
+        private System.Windows.Forms.Button button_start;
     }
 }

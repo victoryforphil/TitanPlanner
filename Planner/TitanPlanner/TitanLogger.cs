@@ -8,11 +8,22 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net.Sockets;
 using System.Threading;
+using Newtonsoft.Json;
 
 namespace TitanPlanner
 {
     public partial class TitanLogger : Form
     {
+        public class LogArray
+        {
+            public LogItem[] Items;
+        }
+        public class LogItem
+        {
+            public string key = null;
+            public string data = null;
+        }
+
         delegate void SetTextCallback(string text);
         TcpListener listener;
         TcpClient client;
@@ -24,27 +35,32 @@ namespace TitanPlanner
 
             InitializeComponent();
 
-            listener = new TcpListener(7777);
-            listener.Start();
-            client = listener.AcceptTcpClient();
-            ns = client.GetStream();
-            t = new Thread(DoWork);
-            t.Start();
+            
             
         }
 
         public void DoWork()
         {
+            listener = new TcpListener(7777);
+            listener.Start();
+            client = listener.AcceptTcpClient();
+            Console.WriteLine("Client Connectedd");
+            
+            ns = client.GetStream();
+            
             byte[] bytes = new byte[1024];
+            int i;
             while (true)
             {
-                int bytesRead = ns.Read(bytes, 0, bytes.Length);
-                this.SetText(Encoding.ASCII.GetString(bytes, 0, bytesRead));
-               
+                client.Client.Receive(bytes);
+                this.SetText(Encoding.ASCII.GetString(bytes));
+
+                bytes = new byte[256];
             }
         }
         private void SetText(string text)
         {
+
             // InvokeRequired required compares the thread ID of the
             // calling thread to the thread ID of the creating thread.
             // If these threads are different, it returns true.
@@ -55,7 +71,29 @@ namespace TitanPlanner
             }
             else
             {
-                this.listBox_logs.Items.Add(text );
+                
+                LogItem[] Items = JsonConvert.DeserializeObject<LogItem[]>(text);
+                if(Items == null)
+                {
+                    return;
+                }
+                for (int i = 0; i < Items.Length; i++)
+                {
+                    if (Items[i].key != null)
+                    {
+                        if (listBox_logs.Items.Count <= i)
+                        {
+                            listBox_logs.Items.Add(Items[i].key + " - " + Items[i].data);
+                        }
+                        else
+                        {
+                            listBox_logs.Items[i] = Items[i].key + " - " + Items[i].data;
+                        }
+                    }
+                }
+
+
+
             }
         }
 
@@ -67,6 +105,19 @@ namespace TitanPlanner
       
 
         private void label_serverstatus_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void button_start_Click(object sender, EventArgs e)
+        {
+           
+            
+            t = new Thread(DoWork);
+            t.Start();
+        }
+
+        private void listBox_logs_SelectedIndexChanged(object sender, EventArgs e)
         {
 
         }
