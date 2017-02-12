@@ -23,7 +23,7 @@ import org.firstinspires.ftc.robotcore.external.Telemetry;
 
 @Autonomous(name="Titan Planner", group="Linear Opmode")  // @Autonomous(...) is the other common choice
 
-public class TitanPlanner extends LinearOpMode {
+public class TitanOpTest extends LinearOpMode {
 
 
     private ElapsedTime runtime = new ElapsedTime();
@@ -39,11 +39,13 @@ public class TitanPlanner extends LinearOpMode {
         runtime.reset();
 
         while (opModeIsActive()) {
-            telemetry.addData("Status", "Run Time: " + runtime.toString());
+            telemetry.addData("Status", "Run Time: " + runtime.seconds());
             telemetry.update();
-            Logger.SendData("RUNTIME", runtime.toString());
-
+            Logger.AddData("RUNTIME", runtime.toString());
+            Logger.AddData("RUNTIME 2", runtime.toString());
         }
+
+        Logger.Stop();
     }
 
 }
