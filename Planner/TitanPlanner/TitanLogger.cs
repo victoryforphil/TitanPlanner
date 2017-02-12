@@ -55,7 +55,7 @@ namespace TitanPlanner
                 client.Client.Receive(bytes);
                 this.SetText(Encoding.ASCII.GetString(bytes));
 
-                bytes = new byte[256];
+                bytes = new byte[1024];
             }
         }
         private void SetText(string text)
