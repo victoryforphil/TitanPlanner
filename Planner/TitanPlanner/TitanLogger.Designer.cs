@@ -56,7 +56,7 @@
             // label_serverstatus
             // 
             this.label_serverstatus.AutoSize = true;
-            this.label_serverstatus.Location = new System.Drawing.Point(417, 540);
+            this.label_serverstatus.Location = new System.Drawing.Point(12, 554);
             this.label_serverstatus.Name = "label_serverstatus";
             this.label_serverstatus.Size = new System.Drawing.Size(35, 13);
             this.label_serverstatus.TabIndex = 2;
@@ -65,9 +65,9 @@
             // 
             // button_start
             // 
-            this.button_start.Location = new System.Drawing.Point(186, 543);
+            this.button_start.Location = new System.Drawing.Point(328, 544);
             this.button_start.Name = "button_start";
-            this.button_start.Size = new System.Drawing.Size(75, 23);
+            this.button_start.Size = new System.Drawing.Size(124, 23);
             this.button_start.TabIndex = 3;
             this.button_start.Text = "Start Server";
             this.button_start.UseVisualStyleBackColor = true;
@@ -77,13 +77,14 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(483, 576);
+            this.ClientSize = new System.Drawing.Size(470, 576);
             this.Controls.Add(this.button_start);
             this.Controls.Add(this.label_serverstatus);
             this.Controls.Add(this.label_phonestatus);
             this.Controls.Add(this.listBox_logs);
             this.Name = "TitanLogger";
             this.Text = "TitanLogger";
+            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TitanLogger_FormClosing);
             this.ResumeLayout(false);
             this.PerformLayout();
 

@@ -1,6 +1,7 @@
 package org.firstinspires.ftc.teamcode;
 
 import android.content.res.AssetManager;
+import android.util.Log;
 import android.util.Xml;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
@@ -14,6 +15,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
@@ -124,16 +126,89 @@ public class TitanInterpreter extends LinearOpMode{
         for(int i=0;i<Steps.size();i++){
             Step CurrentStep = Steps.get(i);
 
-            Logger.AddData("CURRENT STEP", CurrentStep.Name + ".");
+            Logger.AddData("CURRENT STEP", CurrentStep.Name + " - " + CurrentStep.Type);
 
-            while(opModeIsActive() && CurrentStep.Delay > Runtime.seconds()){
-                Logger.AddData("RUNTIME", Runtime.seconds() + "");
-                telemetry.addData("CURRENT STEP", CurrentStep.Name + ".");
+            switch (CurrentStep.Type){
+                case 1: // Waypoint
+                    Blocking_MoveMotor(CurrentStep.CoordX * TicksPerUnit, CurrentStep.CoordY * TicksPerUnit);
+                    break;
+                case 2: // Rotation
+
+                    break;
+                case 3: // Choice?
+
+                    break;
             }
-            Runtime.reset();
+
+            Blocking_WaitTilTime(CurrentStep.Delay + Runtime.seconds());
+
         }
 
         isWorking = false;
 
     }
+
+
+    public void Blocking_MoveMotor(double EncoderX, double EncoderY){
+        while(opModeIsActive() && EncoderX > Runtime.milliseconds() ){
+            Logger.AddData("MOTOR", Runtime.milliseconds() + " / " + EncoderX);
+        }
+    }
+
+    public void Blocking_WaitTilTime(double time){
+        while(opModeIsActive() && time > Runtime.seconds()){
+            Logger.AddData("RUNTIME", Runtime.seconds() + "");
+        }
+    }
+
+    private class Denoiser{
+        private ArrayList<Float> AllValues = new ArrayList<Float>();
+        private float CurrentValue;
+
+        private int UpdateRate;
+
+        private int CurrentTick = 0;
+
+        private int OutlierCount = 0;
+        private int OutlierMaxCount = 5;
+        private float OutlierMax;
+
+
+        public Denoiser(int updateRate, float outlierMax){
+            UpdateRate = updateRate;
+            OutlierMax = outlierMax;
+        }
+
+        public void Update(float val){
+            if(CurrentTick >= UpdateRate){
+                AllValues.clear();
+                CurrentTick = 0;
+            }
+
+
+            float lastVal = AllValues.get(AllValues.size() - 1);
+            if(Math.abs(val - lastVal) > OutlierMax && OutlierMaxCount < OutlierCount){
+                Log.d("Desnoiser!", "Outlier: " + val );
+                OutlierCount++;
+                return;
+
+            }else if(OutlierMaxCount >= OutlierCount){
+                AllValues.add(val);
+                OutlierCount = 0;
+            }
+
+            CurrentValue = AllValues.get(AllValues.size());
+            
+            CurrentTick++;
+        }
+
+        public float GetValueFloat(){
+
+        }
+
+        public double GetValueDouble(){
+
+        }
+    }
+
 }

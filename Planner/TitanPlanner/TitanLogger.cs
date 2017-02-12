@@ -25,6 +25,8 @@ namespace TitanPlanner
         }
 
         delegate void SetTextCallback(string text);
+        delegate void ServerConnectedLabel();
+        delegate void PhoneConnectedLabel();
         TcpListener listener;
         TcpClient client;
         NetworkStream ns;
@@ -34,28 +36,82 @@ namespace TitanPlanner
         {
 
             InitializeComponent();
+            label_phonestatus.Text = "Phone Disconnected!";
+            label_phonestatus.ForeColor = Color.Red;
+            label_serverstatus.Text = "Server Offline";
+            label_serverstatus.ForeColor = Color.Red;
 
-            
-            
+        }
+
+        public void ServerStaredLabel()
+        {
+            if (this.label_serverstatus.InvokeRequired)
+            {
+                ServerConnectedLabel d = new ServerConnectedLabel(ServerStaredLabel);
+                this.Invoke(d, new object[] {});
+            }
+            else
+            {
+                label_serverstatus.Text = "Server Started";
+                label_serverstatus.ForeColor = Color.Green;
+
+            }
+        }
+
+        public void PhoneConnected()
+        {
+            if (this.label_phonestatus.InvokeRequired)
+            {
+                PhoneConnectedLabel d = new PhoneConnectedLabel(PhoneConnected);
+                this.Invoke(d, new object[] { });
+            }
+            else
+            {
+                label_phonestatus.Text = "Phone Connected!";
+                label_phonestatus.ForeColor = Color.Green;
+
+            }
         }
 
         public void DoWork()
         {
             listener = new TcpListener(7777);
-            listener.Start();
-            client = listener.AcceptTcpClient();
-            Console.WriteLine("Client Connectedd");
             
+          
+            listener.Start();
+            ServerStaredLabel();
+            
+            try
+            {
+                client = listener.AcceptTcpClient();
+            }
+            catch (Exception e)
+            {
+                return;
+            }
+
+            Console.WriteLine("Client Connected");
+            PhoneConnected();
+            if(client == null)
+            {
+                return;
+            }
             ns = client.GetStream();
             
             byte[] bytes = new byte[1024];
             int i;
-            while (true)
+            while (client.Connected)
             {
-                client.Client.Receive(bytes);
-                this.SetText(Encoding.ASCII.GetString(bytes));
+                try
+                {
+                    client.Client.Receive(bytes);
+                    this.SetText(Encoding.ASCII.GetString(bytes));
 
-                bytes = new byte[1024];
+                    bytes = new byte[1024];
+                }catch(Exception e)
+                {
+
+                }
             }
         }
         private void SetText(string text)
@@ -111,15 +167,50 @@ namespace TitanPlanner
 
         private void button_start_Click(object sender, EventArgs e)
         {
+            t = new Thread(DoWork);
+            if (button_start.Text == "Stop Server")
+            {
+                button_start.Text = "Start Server";
+                label_phonestatus.Text = "Phone Disconnected!";
+                label_phonestatus.ForeColor = Color.Red;
+                label_serverstatus.Text = "Server Offline";
+                label_serverstatus.ForeColor = Color.Red;
+                listener.Stop();
+                if (client != null)
+                {
+                    client.Close();
+                }
+                t.Abort();
+            }
+            else
+            {
+                button_start.Text = "Stop Server";
+                t.Start();
+               
+            }
            
             
-            t = new Thread(DoWork);
-            t.Start();
+            
         }
-
+        
         private void listBox_logs_SelectedIndexChanged(object sender, EventArgs e)
         {
 
+        }
+
+        private void TitanLogger_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            button_start.Text = "Start Server";
+            label_phonestatus.Text = "Phone Disconnected!";
+            label_phonestatus.ForeColor = Color.Red;
+            label_serverstatus.Text = "Server Offline";
+            label_serverstatus.ForeColor = Color.Red;
+            listener.Stop();
+            if (client != null)
+            {
+                client.Close();
+            }
+            t.Abort();
         }
     }
 }
