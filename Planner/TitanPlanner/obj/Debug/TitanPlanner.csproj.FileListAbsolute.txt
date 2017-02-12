@@ -31,3 +31,5 @@ E:\Programs\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.WaypointSet
 E:\Programs\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.csproj.GenerateResource.Cache
 E:\Programs\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.exe
 E:\Programs\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.pdb
+E:\Programs\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.DriveConfig.resources
+E:\Programs\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.HardwareMap.resources

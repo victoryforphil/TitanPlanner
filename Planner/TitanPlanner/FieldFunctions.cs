@@ -14,6 +14,8 @@ namespace TitanPlanner
         public float TrimX;
         public float TrimY;
         public List<Step> Steps = new List<Step>();
+        public List<TitanPlanner.Hardware> Hardware = new List<TitanPlanner.Hardware>();
+        public List<TitanPlanner.DriveMotorConfig> Drive = new List<TitanPlanner.DriveMotorConfig>();
     }
     static class FieldFunctions
     {
@@ -90,13 +92,15 @@ namespace TitanPlanner
             Console.WriteLine("Saving to: " + path);
             UpdateTickPerUnit();
             TitanObject exportobj = new TitanObject();
-            JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.All };
+            JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
             exportobj.TicksPerMeter   = FieldData.TicksPerMeter;
             exportobj.TicksPerUnit    = FieldData.TicksPerUnit;
             exportobj.TrimX           = FieldData.TrimX;
             exportobj.TrimY           = FieldData.TrimY;
             exportobj.FieldSizeMeters = FieldData.FieldSizeMeters;
             exportobj.Steps           = FieldData.Steps;
+            exportobj.Hardware        = FieldData.hardware;
+            exportobj.Drive           = FieldData.DriveConfigs;
 
             string json = JsonConvert.SerializeObject(exportobj, settings);
             System.IO.File.WriteAllText(path, json);

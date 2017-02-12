@@ -32,14 +32,19 @@
             this.label_phonestatus = new System.Windows.Forms.Label();
             this.label_serverstatus = new System.Windows.Forms.Label();
             this.button_start = new System.Windows.Forms.Button();
+            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.tabPage1 = new System.Windows.Forms.TabPage();
+            this.tabPage2 = new System.Windows.Forms.TabPage();
+            this.tabControl1.SuspendLayout();
+            this.tabPage2.SuspendLayout();
             this.SuspendLayout();
             // 
             // listBox_logs
             // 
             this.listBox_logs.FormattingEnabled = true;
-            this.listBox_logs.Location = new System.Drawing.Point(13, 13);
+            this.listBox_logs.Location = new System.Drawing.Point(3, 6);
             this.listBox_logs.Name = "listBox_logs";
-            this.listBox_logs.Size = new System.Drawing.Size(439, 524);
+            this.listBox_logs.Size = new System.Drawing.Size(439, 498);
             this.listBox_logs.TabIndex = 0;
             this.listBox_logs.SelectedIndexChanged += new System.EventHandler(this.listBox_logs_SelectedIndexChanged);
             // 
@@ -73,18 +78,51 @@
             this.button_start.UseVisualStyleBackColor = true;
             this.button_start.Click += new System.EventHandler(this.button_start_Click);
             // 
+            // tabControl1
+            // 
+            this.tabControl1.Controls.Add(this.tabPage1);
+            this.tabControl1.Controls.Add(this.tabPage2);
+            this.tabControl1.Location = new System.Drawing.Point(2, 0);
+            this.tabControl1.Name = "tabControl1";
+            this.tabControl1.SelectedIndex = 0;
+            this.tabControl1.Size = new System.Drawing.Size(450, 537);
+            this.tabControl1.TabIndex = 4;
+            // 
+            // tabPage1
+            // 
+            this.tabPage1.Location = new System.Drawing.Point(4, 22);
+            this.tabPage1.Name = "tabPage1";
+            this.tabPage1.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage1.Size = new System.Drawing.Size(442, 511);
+            this.tabPage1.TabIndex = 0;
+            this.tabPage1.Text = "Formated";
+            this.tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // tabPage2
+            // 
+            this.tabPage2.Controls.Add(this.listBox_logs);
+            this.tabPage2.Location = new System.Drawing.Point(4, 22);
+            this.tabPage2.Name = "tabPage2";
+            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
+            this.tabPage2.Size = new System.Drawing.Size(442, 511);
+            this.tabPage2.TabIndex = 1;
+            this.tabPage2.Text = "Raw";
+            this.tabPage2.UseVisualStyleBackColor = true;
+            // 
             // TitanLogger
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(470, 576);
+            this.ClientSize = new System.Drawing.Size(462, 576);
+            this.Controls.Add(this.tabControl1);
             this.Controls.Add(this.button_start);
             this.Controls.Add(this.label_serverstatus);
             this.Controls.Add(this.label_phonestatus);
-            this.Controls.Add(this.listBox_logs);
             this.Name = "TitanLogger";
             this.Text = "TitanLogger";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.TitanLogger_FormClosing);
+            this.tabControl1.ResumeLayout(false);
+            this.tabPage2.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -96,5 +134,8 @@
         private System.Windows.Forms.Label label_phonestatus;
         private System.Windows.Forms.Label label_serverstatus;
         private System.Windows.Forms.Button button_start;
+        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabPage tabPage1;
+        private System.Windows.Forms.TabPage tabPage2;
     }
 }

@@ -51,55 +51,73 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DecisionSettings.cs">
+    <Compile Include="Forms\DecisionSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="DecisionSettings.Designer.cs">
+    <Compile Include="Forms\DecisionSettings.Designer.cs">
       <DependentUpon>DecisionSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="FieldData.cs" />
     <Compile Include="FieldFunctions.cs" />
     <Compile Include="FieldMath.cs" />
-    <Compile Include="MainApp.cs">
+    <Compile Include="Forms\DriveConfig.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="MainApp.Designer.cs">
+    <Compile Include="Forms\DriveConfig.Designer.cs">
+      <DependentUpon>DriveConfig.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\HardwareMap.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\HardwareMap.Designer.cs">
+      <DependentUpon>HardwareMap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Forms\MainApp.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\MainApp.Designer.cs">
       <DependentUpon>MainApp.cs</DependentUpon>
     </Compile>
-    <Compile Include="NewFile.cs">
+    <Compile Include="Forms\NewFile.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="NewFile.Designer.cs">
+    <Compile Include="Forms\NewFile.Designer.cs">
       <DependentUpon>NewFile.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="RotationSettings.cs">
+    <Compile Include="Forms\RotationSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="RotationSettings.Designer.cs">
+    <Compile Include="Forms\RotationSettings.Designer.cs">
       <DependentUpon>RotationSettings.cs</DependentUpon>
     </Compile>
     <Compile Include="Step.cs" />
-    <Compile Include="TitanLogger.cs">
+    <Compile Include="Forms\TitanLogger.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="TitanLogger.Designer.cs">
+    <Compile Include="Forms\TitanLogger.Designer.cs">
       <DependentUpon>TitanLogger.cs</DependentUpon>
     </Compile>
-    <Compile Include="WaypointSettings.cs">
+    <Compile Include="Forms\WaypointSettings.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WaypointSettings.Designer.cs">
+    <Compile Include="Forms\WaypointSettings.Designer.cs">
       <DependentUpon>WaypointSettings.cs</DependentUpon>
     </Compile>
-    <EmbeddedResource Include="DecisionSettings.resx">
+    <EmbeddedResource Include="Forms\DecisionSettings.resx">
       <DependentUpon>DecisionSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="MainApp.resx">
+    <EmbeddedResource Include="Forms\DriveConfig.resx">
+      <DependentUpon>DriveConfig.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\HardwareMap.resx">
+      <DependentUpon>HardwareMap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\MainApp.resx">
       <DependentUpon>MainApp.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="NewFile.resx">
+    <EmbeddedResource Include="Forms\NewFile.resx">
       <DependentUpon>NewFile.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
@@ -112,13 +130,13 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
-    <EmbeddedResource Include="RotationSettings.resx">
+    <EmbeddedResource Include="Forms\RotationSettings.resx">
       <DependentUpon>RotationSettings.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="TitanLogger.resx">
+    <EmbeddedResource Include="Forms\TitanLogger.resx">
       <DependentUpon>TitanLogger.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="WaypointSettings.resx">
+    <EmbeddedResource Include="Forms\WaypointSettings.resx">
       <DependentUpon>WaypointSettings.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">

@@ -258,6 +258,8 @@ namespace TitanPlanner
                     FieldData.FieldSizeMeters = m.FieldSizeMeters;
                     FieldData.TicksPerMeter = m.TicksPerMeter;
                     FieldData.TicksPerUnit = m.TicksPerUnit;
+                    FieldData.hardware = m.Hardware;
+                    FieldData.DriveConfigs = m.Drive;
 
                     nud_TicksPerMeter.Value = (decimal)FieldData.TicksPerMeter;
                     numericUpDown1.Value = (decimal)FieldData.FieldSizeMeters;
@@ -283,6 +285,18 @@ namespace TitanPlanner
         private void Launch()
         {
            
+        }
+
+        private void toolStripButton2_Click(object sender, EventArgs e)
+        {
+            DriveConfig _driveConfig = new DriveConfig();
+            _driveConfig.ShowDialog();
+        }
+
+        private void toolStripButton1_Click(object sender, EventArgs e)
+        {
+            HardwareMap _window = new HardwareMap();
+            _window.ShowDialog();
         }
     }
 }

@@ -6,7 +6,12 @@ import android.util.Xml;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
+import com.qualcomm.robotcore.hardware.DcMotor;
+import com.qualcomm.robotcore.hardware.HardwareDevice;
+import com.qualcomm.robotcore.hardware.HardwareMap;
+import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
 import org.json.JSONArray;
@@ -16,20 +21,26 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Logger;
 
 /**
  * Created by VictoryForPhil on 2/11/2017.
  */
-@Autonomous(name="Titan Planner 2", group="Linear Opmode")
+
 public class TitanInterpreter extends LinearOpMode{
     private String TitanFileName = "Test.titan";
     private ElapsedTime Runtime = new ElapsedTime();
     private TitanLogger Logger = new TitanLogger();
 
     private ArrayList<Step> Steps = new ArrayList<Step>();
+
+    private HashMap<String, HardwareDevice> Hardward = new HashMap<String, HardwareDevice>();
+
+
     private float TrimX;
     private float TrimY;
 
@@ -77,11 +88,16 @@ public class TitanInterpreter extends LinearOpMode{
             try {
                 JSONObject _titanObject = new JSONObject(ConvertedString);
                 JSONArray _stepArray = _titanObject.getJSONObject("Steps").getJSONArray("$values");
+
+                JSONArray _hardwareArray = _titanObject.getJSONObject("Hardware").getJSONArray("$values");
+
                 TrimX = (float)_titanObject.getDouble("TrimX");
                 TrimY = (float)_titanObject.getDouble("TrimY");
+
                 Logger.AddData("TrimX", TrimX + "");
                 Logger.AddData("TrimY", TrimY + "");
                 Logger.AddData("STEPS", _stepArray.length() + "");
+
 
 
                 for (int i=0;i<_stepArray.length();i++){
@@ -103,6 +119,25 @@ public class TitanInterpreter extends LinearOpMode{
                     Steps.add(_newStep);
                 }
 
+                for (int i=0;i<_stepArray.length();i++){
+
+                    JSONObject _obj = (JSONObject) _stepArray.get(i);
+
+                    String type = _obj.getString("Type");
+                    String name = _obj.getString("Name");
+                    switch (type){
+                        case "Ultrasonic":
+                            Hardward.put(name, hardwareMap.ultrasonicSensor.get(name));
+                            break;
+                        case "Motor":
+                            Hardward.put(name, hardwareMap.dcMotor.get(name));
+                            break;
+                        case "Servo":
+                            Hardward.put(name, hardwareMap.servo.get(name));
+                            break;
+                    }
+                }
+
                 Logger.AddData("STATUS", "Loaded: " + Steps.size());
 
             }catch (JSONException ex){
@@ -115,6 +150,7 @@ public class TitanInterpreter extends LinearOpMode{
             e.printStackTrace();
         }
     }
+
 
     public void StartProgram(){
         Logger.AddData("STATUS", "Start Program");
@@ -130,7 +166,7 @@ public class TitanInterpreter extends LinearOpMode{
 
             switch (CurrentStep.Type){
                 case 1: // Waypoint
-                    Blocking_MoveMotor(CurrentStep.CoordX * TicksPerUnit, CurrentStep.CoordY * TicksPerUnit);
+                    Blocking_MoveMotor(CurrentStep.CoordX, CurrentStep.CoordY , CurrentStep.Speed);
                     break;
                 case 2: // Rotation
 
@@ -149,10 +185,15 @@ public class TitanInterpreter extends LinearOpMode{
     }
 
 
-    public void Blocking_MoveMotor(double EncoderX, double EncoderY){
-        while(opModeIsActive() && EncoderX > Runtime.milliseconds() ){
-            Logger.AddData("MOTOR", Runtime.milliseconds() + " / " + EncoderX);
-        }
+    public boolean CheckChoice(String SensorType, ){
+
+    }
+
+    public void Blocking_MoveMotor(double CoordX, double CoordY, double Speed){
+        double EncoderX = CoordX * TicksPerUnit;
+        double EncoderY = CoordY * TicksPerUnit;
+
+
     }
 
     public void Blocking_WaitTilTime(double time){
@@ -198,16 +239,16 @@ public class TitanInterpreter extends LinearOpMode{
             }
 
             CurrentValue = AllValues.get(AllValues.size());
-            
+
             CurrentTick++;
         }
 
         public float GetValueFloat(){
-
+            return  CurrentValue;
         }
 
         public double GetValueDouble(){
-
+            return (double)CurrentValue;
         }
     }
 

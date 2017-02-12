@@ -205,12 +205,19 @@ namespace TitanPlanner
             label_phonestatus.ForeColor = Color.Red;
             label_serverstatus.Text = "Server Offline";
             label_serverstatus.ForeColor = Color.Red;
-            listener.Stop();
+            if (listener != null)
+            {
+                listener.Stop();
+            }
             if (client != null)
             {
                 client.Close();
             }
-            t.Abort();
+
+            if (t != null)
+            {
+                t.Abort();
+            }
         }
     }
 }

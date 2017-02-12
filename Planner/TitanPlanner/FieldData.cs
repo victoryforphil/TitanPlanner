@@ -7,11 +7,29 @@ using System.Threading.Tasks;
 namespace TitanPlanner
 {
  
+    public class Hardware
+    {
+        public string Name;
+        public string Type;
+    }
 
+    public struct MotorSetting
+    {
+        public string MotorName;
+        public int Setting;
+    }
+    public class DriveMotorConfig
+    {
+        public string Direction;
+        public List<MotorSetting> Settings = new List<MotorSetting>();
+    }
     static class FieldData
     {
         public static List<Step> Steps = new List<Step>();
         public static Step CurrentStep;
+
+        public static List<Hardware> hardware = new List<Hardware>();
+        public static List<DriveMotorConfig> DriveConfigs = new List<DriveMotorConfig>();
 
         public static float TicksPerMeter = 3000;
         public static float TicksPerUnit = 10;
