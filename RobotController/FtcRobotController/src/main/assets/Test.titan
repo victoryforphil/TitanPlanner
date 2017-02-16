@@ -1,1 +1,225 @@
-{"TicksPerUnit":10.7999992,"FieldSizeMeters":3.6,"TicksPerMeter":3000.0,"TrimX":100.0,"TrimY":100.0,"Steps":[{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":0,"Name":"Waypoint 0","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":1000.0,"Y":1000.0},"Speed":1.0,"Type":1,"ID":1,"Name":"Waypoint 1","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":2,"Name":"Waypoint 2","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":3,"Name":"Waypoint 3","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":4,"Name":"Waypoint 4","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":5,"Name":"Waypoint 5","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":6,"Name":"Waypoint 6","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":7,"Name":"Waypoint 7","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":8,"Name":"Waypoint 8","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":9,"Name":"Waypoint 9","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":10,"Name":"Waypoint 10","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":11,"Name":"Waypoint 11","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":12,"Name":"Waypoint 12","Delay":0.0,"ChildSteps":[],"isChild":false},{"$type":"TitanPlanner.WaypointStep, TitanPlanner","Coord":{"X":250.0,"Y":250.0},"Speed":1.0,"Type":1,"ID":13,"Name":"Waypoint 13","Delay":0.0,"ChildSteps":[],"isChild":false}],"Hardware":[{"Name":"UltraFront","Type":"Ultrasonic"},{"Name":"Drive1","Type":"Motor"},{"Name":"Drive2","Type":"Motor"},{"Name":"Drive3","Type":"Motor"},{"Name":"Drive4","Type":"Motor"},{"Name":"GrabL","Type":"Motor"},{"Name":"GrabR","Type":"Motor"},{"Name":"LiftL","Type":"Motor"},{"Name":"LiftR","Type":"Motor"}],"Drive":[{"Direction":"Forward","Settings":[{"MotorName":"Drive1","Setting":1},{"MotorName":"Drive2","Setting":1},{"MotorName":"Drive3","Setting":1},{"MotorName":"Drive4","Setting":1},{"MotorName":"GrabL","Setting":0},{"MotorName":"GrabR","Setting":0},{"MotorName":"LiftL","Setting":0},{"MotorName":"LiftR","Setting":0}]},{"Direction":"Backward","Settings":[{"MotorName":"Drive1","Setting":-1},{"MotorName":"Drive2","Setting":-1},{"MotorName":"Drive3","Setting":-1},{"MotorName":"Drive4","Setting":-1},{"MotorName":"GrabL","Setting":0},{"MotorName":"GrabR","Setting":0},{"MotorName":"LiftL","Setting":0},{"MotorName":"LiftR","Setting":0}]},{"Direction":"Left","Settings":[{"MotorName":"Drive1","Setting":1},{"MotorName":"Drive2","Setting":1},{"MotorName":"Drive3","Setting":0},{"MotorName":"Drive4","Setting":0},{"MotorName":"GrabL","Setting":0},{"MotorName":"GrabR","Setting":0},{"MotorName":"LiftL","Setting":0},{"MotorName":"LiftR","Setting":0}]},{"Direction":"Right","Settings":[{"MotorName":"Drive1","Setting":0},{"MotorName":"Drive2","Setting":0},{"MotorName":"Drive3","Setting":1},{"MotorName":"Drive4","Setting":1},{"MotorName":"GrabL","Setting":0},{"MotorName":"GrabR","Setting":0},{"MotorName":"LiftL","Setting":0},{"MotorName":"LiftR","Setting":0}]},{"Direction":"Turn Left","Settings":[{"MotorName":"Drive1","Setting":1},{"MotorName":"Drive2","Setting":1},{"MotorName":"Drive3","Setting":1},{"MotorName":"Drive4","Setting":1},{"MotorName":"GrabL","Setting":0},{"MotorName":"GrabR","Setting":0},{"MotorName":"LiftL","Setting":0},{"MotorName":"LiftR","Setting":0}]},{"Direction":"Turn Right","Settings":[{"MotorName":"Drive1","Setting":-1},{"MotorName":"Drive2","Setting":-1},{"MotorName":"Drive3","Setting":-1},{"MotorName":"Drive4","Setting":-1},{"MotorName":"GrabL","Setting":-1},{"MotorName":"GrabR","Setting":0},{"MotorName":"LiftL","Setting":0},{"MotorName":"LiftR","Setting":0}]}]}
+{
+  "TicksPerUnit": 10.7999992,
+  "FieldSizeMeters": 3.6,
+  "TicksPerMeter": 3000.0,
+  "TrimX": 100.0,
+  "TrimY": 100.0,
+  "Steps": [
+    {
+      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
+      "Coord": {
+        "X": 500.0,
+        "Y": 50.0
+      },
+      "Speed": 1.0,
+      "Type": 1,
+      "ID": 0,
+      "Name": "Waypoint 0",
+      "Delay": 0.0,
+      "ChildSteps": [],
+      "isChild": false
+    },
+    {
+      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
+      "Coord": {
+        "X": 500.0,
+        "Y": 400.0
+      },
+      "Speed": 1.0,
+      "Type": 1,
+      "ID": 1,
+      "Name": "Waypoint 1",
+      "Delay": 3.0,
+      "ChildSteps": [],
+      "isChild": false
+    },
+    {
+      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
+      "Coord": {
+        "X": 600.0,
+        "Y": 500.0
+      },
+      "Speed": 1.0,
+      "Type": 1,
+      "ID": 2,
+      "Name": "Waypoint 2",
+      "Delay": 3.0,
+      "ChildSteps": [],
+      "isChild": false
+    },
+    {
+      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
+      "Coord": {
+        "X": 800.0,
+        "Y": 500.0
+      },
+      "Speed": 1.0,
+      "Type": 1,
+      "ID": 3,
+      "Name": "Waypoint 3",
+      "Delay": 3.0,
+      "ChildSteps": [],
+      "isChild": false
+    },
+    {
+      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
+      "Coord": {
+        "X": 1000.0,
+        "Y": 500.0
+      },
+      "Speed": 1.0,
+      "Type": 1,
+      "ID": 4,
+      "Name": "Waypoint 4",
+      "Delay": 0.0,
+      "ChildSteps": [],
+      "isChild": false
+    }
+  ],
+  "Hardware": [
+    {
+      "Name": "1",
+      "Type": "Motor"
+    },
+    {
+      "Name": "2",
+      "Type": "Motor"
+    },
+    {
+      "Name": "3",
+      "Type": "Motor"
+    },
+    {
+      "Name": "4",
+      "Type": "Motor"
+    }
+  ],
+  "Drive": [
+    {
+      "Direction": "Forward",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 1
+        },
+        {
+          "MotorName": "2",
+          "Setting": 1
+        },
+        {
+          "MotorName": "3",
+          "Setting": 1
+        },
+        {
+          "MotorName": "4",
+          "Setting": 1
+        }
+      ]
+    },
+    {
+      "Direction": "Backward",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": -1
+        },
+        {
+          "MotorName": "2",
+          "Setting": -1
+        },
+        {
+          "MotorName": "3",
+          "Setting": -1
+        },
+        {
+          "MotorName": "4",
+          "Setting": -1
+        }
+      ]
+    },
+    {
+      "Direction": "Left",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 0
+        },
+        {
+          "MotorName": "2",
+          "Setting": 0
+        },
+        {
+          "MotorName": "3",
+          "Setting": 0
+        },
+        {
+          "MotorName": "4",
+          "Setting": 0
+        }
+      ]
+    },
+    {
+      "Direction": "Right",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 0
+        },
+        {
+          "MotorName": "2",
+          "Setting": 0
+        },
+        {
+          "MotorName": "3",
+          "Setting": 0
+        },
+        {
+          "MotorName": "4",
+          "Setting": 0
+        }
+      ]
+    },
+    {
+      "Direction": "Turn Left",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 0
+        },
+        {
+          "MotorName": "2",
+          "Setting": 0
+        },
+        {
+          "MotorName": "3",
+          "Setting": 0
+        },
+        {
+          "MotorName": "4",
+          "Setting": 0
+        }
+      ]
+    },
+    {
+      "Direction": "Turn Right",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 0
+        },
+        {
+          "MotorName": "2",
+          "Setting": 0
+        },
+        {
+          "MotorName": "3",
+          "Setting": 0
+        },
+        {
+          "MotorName": "4",
+          "Setting": 0
+        }
+      ]
+    }
+  ]
+}

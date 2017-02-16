@@ -25,12 +25,13 @@ import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
  * Created by VictoryForPhil on 2/11/2017.
  */
-
+@Autonomous(name="Titan", group="Concept")
 public class TitanInterpreter extends LinearOpMode{
     private String TitanFileName = "Test.titan";
     private ElapsedTime Runtime = new ElapsedTime();
@@ -38,13 +39,20 @@ public class TitanInterpreter extends LinearOpMode{
 
     private ArrayList<Step> Steps = new ArrayList<Step>();
 
-    private HashMap<String, HardwareDevice> Hardward = new HashMap<String, HardwareDevice>();
-
+    private HashMap<String, HardwareDevice> Hardware = new HashMap<String, HardwareDevice>();
+    private HashMap<String, ArrayList<MotorSetting>> DriveConfig = new HashMap<String, ArrayList<MotorSetting>>();
 
     private float TrimX;
     private float TrimY;
 
     private boolean isWorking = true;
+
+    private class MotorSetting{
+        public String Name;
+        public int Value;
+    }
+
+
 
     private class Step{
         public int Type;
@@ -87,12 +95,15 @@ public class TitanInterpreter extends LinearOpMode{
             String ConvertedString = new String(TitanFileData);
             try {
                 JSONObject _titanObject = new JSONObject(ConvertedString);
-                JSONArray _stepArray = _titanObject.getJSONObject("Steps").getJSONArray("$values");
+                JSONArray _stepArray = _titanObject.getJSONArray("Steps");
 
-                JSONArray _hardwareArray = _titanObject.getJSONObject("Hardware").getJSONArray("$values");
+                JSONArray _hardwareArray = _titanObject.getJSONArray("Hardware");
+                JSONArray _driveArray = _titanObject.getJSONArray("Drive");
+
 
                 TrimX = (float)_titanObject.getDouble("TrimX");
                 TrimY = (float)_titanObject.getDouble("TrimY");
+                TicksPerUnit = (float)_titanObject.getDouble("TicksPerUnit");
 
                 Logger.AddData("TrimX", TrimX + "");
                 Logger.AddData("TrimY", TrimY + "");
@@ -113,6 +124,7 @@ public class TitanInterpreter extends LinearOpMode{
                             _newStep.CoordX = _obj.getJSONObject("Coord").getDouble("X");
                             _newStep.CoordY = _obj.getJSONObject("Coord").getDouble("Y");
                             _newStep.Speed  = _obj.getDouble("Speed");
+                            _newStep.Type   = type;
                             break;
                     }
 
@@ -127,21 +139,46 @@ public class TitanInterpreter extends LinearOpMode{
                     String name = _obj.getString("Name");
                     switch (type){
                         case "Ultrasonic":
-                            Hardward.put(name, hardwareMap.ultrasonicSensor.get(name));
+                            Hardware.put(name, hardwareMap.ultrasonicSensor.get(name));
                             break;
                         case "Motor":
-                            Hardward.put(name, hardwareMap.dcMotor.get(name));
+                            Hardware.put(name, hardwareMap.dcMotor.get(name));
                             break;
                         case "Servo":
-                            Hardward.put(name, hardwareMap.servo.get(name));
+                            Hardware.put(name, hardwareMap.servo.get(name));
                             break;
                     }
+                }
+
+                for (int i=0;i<_driveArray.length();i++){
+
+                    JSONObject _obj = (JSONObject) _driveArray.get(i);
+
+                    String Direction = _obj.getString("Direction");
+
+                    ArrayList<MotorSetting> MotorSettings = new ArrayList<MotorSetting>();
+                    JSONArray _motorArray = _obj.getJSONArray("Settings");
+
+
+                    for(int x=0;x<_motorArray.length();x++) {
+
+                        JSONObject _motorObj = (JSONObject) _motorArray.get(x);
+                        MotorSetting _motor = new MotorSetting();
+                        _motor.Name  = _motorObj.getString("MotorName");
+                        _motor.Value = _motorObj.getInt("Setting");
+                        MotorSettings.add(_motor);
+                        Log.e("JSON", "Loading Motor: " + _motor.Name + " for Direction: " + Direction);
+                    }
+
+                    DriveConfig.put(Direction,MotorSettings);
+
+
                 }
 
                 Logger.AddData("STATUS", "Loaded: " + Steps.size());
 
             }catch (JSONException ex){
-                Logger.AddData("ERROR JSON",ex.toString());
+                Log.e("JSON", ex.getMessage());
             }
 
 
@@ -184,18 +221,115 @@ public class TitanInterpreter extends LinearOpMode{
 
     }
 
+    double LastX = -1;
+    double LastY = -1;
 
-    public boolean CheckChoice(String SensorType, ){
 
-    }
 
     public void Blocking_MoveMotor(double CoordX, double CoordY, double Speed){
-        double EncoderX = CoordX * TicksPerUnit;
-        double EncoderY = CoordY * TicksPerUnit;
 
+       if(LastX == -1){
+           LastX = Steps.get(0).CoordX;
+           LastY = Steps.get(0).CoordY;
+       }
+        double DeltaX = CoordX-LastX;
+        double DeltaY = CoordY-LastY;
+
+        double DirMultiplyerX = DeltaX/DeltaY;
+        double DirMulitplyerY = DeltaY/DeltaX;
+
+        DirMultiplyerX -= Math.abs(DirMultiplyerX - DirMulitplyerY);
+        DirMulitplyerY -= Math.abs(DirMultiplyerX - DirMulitplyerY);
+
+        double EncoderX = (DeltaX * DirMultiplyerX)* TicksPerUnit;
+        double EncoderY = (DeltaY *  DirMulitplyerY) * TicksPerUnit;
+
+        Logger.AddData("MULTIPLIER",  DirMultiplyerX + "/" + DirMulitplyerY );
+        Logger.AddData("DELTA",  DeltaX + "/" + DeltaY );
+        Logger.AddData("ENCODER",  EncoderX + "/" + EncoderY );
+
+        Map<String, Integer> MotorDirections = new HashMap<String, Integer>();
+        ArrayList<String> MotorsTrack = new ArrayList<String>();
+        Logger.AddData("MoveMotor",  EncoderX + "/" + EncoderY );
+        if(EncoderX > 0){
+            for(int i=0; i<DriveConfig.get("Forward").size();i++){
+                MotorSetting _motor = DriveConfig.get("Forward").get(0);
+
+                if(_motor.Value == 0){
+                    return;
+                }
+
+                if(Hardware.get(_motor.Name) != null){
+                    DcMotor _dcMotor = (DcMotor)Hardware.get(_motor.Name);
+                    _dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    _dcMotor.setPower(Speed * DirMultiplyerX * _motor.Value);
+                    _dcMotor.setTargetPosition(_dcMotor.getCurrentPosition() + (int)EncoderX);
+                    MotorsTrack.add(_motor.Name);
+
+                }
+
+
+            }
+        }
+
+        if(EncoderY > 0){
+            for(int i=0; i<DriveConfig.get("Right").size();i++){
+                MotorSetting _motor = DriveConfig.get("Right").get(0);
+
+                if(_motor.Value == 0){
+                    return;
+                }
+
+                if(Hardware.get(_motor.Name) != null){
+                    DcMotor _dcMotor = (DcMotor)Hardware.get(_motor.Name);
+                    _dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+                    _dcMotor.setPower(Speed * DirMulitplyerY * _motor.Value);
+                    _dcMotor.setTargetPosition(_dcMotor.getCurrentPosition() + (int)EncoderY);
+                    MotorsTrack.add(_motor.Name);
+
+                }
+
+
+
+            }
+        }
+        LastX = CoordX;
+        LastY = CoordY;
+
+        while(MotorsBusy(MotorsTrack, false)){
+
+        }
 
     }
 
+    public boolean MotorsBusy(ArrayList<String> Motors, boolean first){
+        boolean isBusy = false;
+
+        if(first){
+            for(int i=0;i<Motors.size();i++){
+                if(Hardware.get(Motors.get(i)) != null){
+                    DcMotor _motor = (DcMotor)Hardware.get((Motors.get(i)));
+                    if(_motor.isBusy() == false){
+                        isBusy = false;
+                    }
+
+                }
+
+            }
+        }else{
+            for(int i=0;i<Motors.size();i++){
+                if(Hardware.get(Motors.get(i)) != null){
+                    DcMotor _motor = (DcMotor)Hardware.get((Motors.get(i)));
+                    if(_motor.isBusy()){
+                        isBusy = true;
+                    }
+
+                }
+
+            }
+        }
+        return  isBusy;
+    }
     public void Blocking_WaitTilTime(double time){
         while(opModeIsActive() && time > Runtime.seconds()){
             Logger.AddData("RUNTIME", Runtime.seconds() + "");

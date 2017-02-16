@@ -27,6 +27,9 @@ namespace TitanPlanner
         delegate void SetTextCallback(string text);
         delegate void ServerConnectedLabel();
         delegate void PhoneConnectedLabel();
+
+        delegate void Update_DeltaArrow(float DeltaX, float DeltaY);
+
         TcpListener listener;
         TcpClient client;
         NetworkStream ns;
@@ -73,6 +76,21 @@ namespace TitanPlanner
             }
         }
 
+        public void UpdateDeltaArrow(float DeltaX, float DeltaY)
+        {
+            if (this.label_phonestatus.InvokeRequired)
+            {
+                Update_DeltaArrow d = new Update_DeltaArrow(UpdateDeltaArrow);
+                this.Invoke(d, new object[] { DeltaX,DeltaY });
+            }
+            else
+            {
+                label_phonestatus.Text = "Phone Connected!";
+                label_phonestatus.ForeColor = Color.Green;
+
+            }
+        }
+
         public void DoWork()
         {
             listener = new TcpListener(7777);
@@ -98,7 +116,7 @@ namespace TitanPlanner
             }
             ns = client.GetStream();
             
-            byte[] bytes = new byte[1024];
+            byte[] bytes = new byte[1024 *20];
             int i;
             while (client.Connected)
             {
@@ -106,13 +124,20 @@ namespace TitanPlanner
                 {
                     client.Client.Receive(bytes);
                     this.SetText(Encoding.ASCII.GetString(bytes));
+                    bytes = new byte[1024 * 20];
 
-                    bytes = new byte[1024];
-                }catch(Exception e)
+                }
+                catch(Exception e)
                 {
 
                 }
             }
+        }
+
+        private Bitmap OrignalMapImage = null;
+        private void ClearMap()
+        {
+           
         }
         private void SetText(string text)
         {
@@ -137,8 +162,56 @@ namespace TitanPlanner
                 {
                     if (Items[i].key != null)
                     {
+                        if(Items[i].key == "MULTIPLIER")
+                        {
+                            label_multiplyer.Text = "MULTIPLIER: " + Items[i].data;
+                        }
+
+                        if (Items[i].key == "ENCODER")
+                        {
+                            label_encoder.Text = "ENCODER: " + Items[i].data;
+                        }
+
+                        if (Items[i].key == "DELTA")
+                        {
+
+                            String raw = Items[i].data.ToString();
+                            float X;
+                            float Y;
+
+                            String Xstring = raw.Substring(0, raw.IndexOf("/") - 1);
+                            String Ystring = raw.Substring(raw.IndexOf("/") + 1);
+
+                            label_Delta.Text = "DELTA: + " +  raw;
+
+                            X = (float)Convert.ToDecimal(Xstring);
+                            Y = (float)Convert.ToDecimal(Ystring);
+
+                            float rad = (float)Math.Atan2(X, Y); // In radians
+                            float deg = (float)(rad * (180 / Math.PI));
+                           
+                            ClearMap();
+                            Bitmap bmp = new Bitmap(TitanPlanner.Properties.Resources.Arrow);
+                            Graphics g = Graphics.FromImage(bmp);
+
+                            float bw2 = bmp.Width / 2f;    // really ought..
+                            float bh2 = bmp.Height / 2f;   // to be equal!!!
+                            
+                            g.TranslateTransform(bw2, bh2);
+                            g.RotateTransform(deg);
+                            g.TranslateTransform(-bw2, -bh2);
+                            g.DrawImage(bmp, 0, 0);
+                            g.ResetTransform();
+
+                            pictureBox_direction.Image = bmp;
+                            Console.WriteLine(deg);
+
+                        }
                         if (listBox_logs.Items.Count <= i)
                         {
+                            
+                            
+
                             listBox_logs.Items.Add(Items[i].key + " - " + Items[i].data);
                         }
                         else
@@ -218,6 +291,16 @@ namespace TitanPlanner
             {
                 t.Abort();
             }
+        }
+
+        private void TitanLogger_Load(object sender, EventArgs e)
+        {
+
+        }
+
+        private void groupBox1_Enter(object sender, EventArgs e)
+        {
+
         }
     }
 }

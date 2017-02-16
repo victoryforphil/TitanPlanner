@@ -93,6 +93,7 @@ namespace TitanPlanner
             UpdateTickPerUnit();
             TitanObject exportobj = new TitanObject();
             JsonSerializerSettings settings = new JsonSerializerSettings { TypeNameHandling = TypeNameHandling.Auto };
+            settings.Formatting = Formatting.Indented;
             exportobj.TicksPerMeter   = FieldData.TicksPerMeter;
             exportobj.TicksPerUnit    = FieldData.TicksPerUnit;
             exportobj.TrimX           = FieldData.TrimX;

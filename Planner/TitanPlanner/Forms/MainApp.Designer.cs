@@ -51,6 +51,7 @@
             this.toolStripButton1 = new System.Windows.Forms.ToolStripButton();
             this.toolStripButton2 = new System.Windows.Forms.ToolStripButton();
             this.pictureBox_Map = new System.Windows.Forms.PictureBox();
+            this.toolStripButton3 = new System.Windows.Forms.ToolStripButton();
             ((System.ComponentModel.ISupportInitialize)(this.nud_TicksPerMeter)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
             this.toolStrip1.SuspendLayout();
@@ -179,6 +180,7 @@
             this.button_delete.TabIndex = 17;
             this.button_delete.Text = "Delete Step";
             this.button_delete.UseVisualStyleBackColor = true;
+            this.button_delete.Click += new System.EventHandler(this.button_delete_Click);
             // 
             // toolStripSeparator1
             // 
@@ -199,7 +201,8 @@
             this.toolStripButton_logger,
             this.toolStripSeparator2,
             this.toolStripButton1,
-            this.toolStripButton2});
+            this.toolStripButton2,
+            this.toolStripButton3});
             this.toolStrip1.Location = new System.Drawing.Point(0, 0);
             this.toolStrip1.Name = "toolStrip1";
             this.toolStrip1.Size = new System.Drawing.Size(737, 25);
@@ -262,10 +265,20 @@
             this.pictureBox_Map.Image = global::TitanPlanner.Properties.Resources.VelocityVortexField_2;
             this.pictureBox_Map.Location = new System.Drawing.Point(0, 25);
             this.pictureBox_Map.Name = "pictureBox_Map";
-            this.pictureBox_Map.Size = new System.Drawing.Size(526, 525);
+            this.pictureBox_Map.Size = new System.Drawing.Size(525, 525);
             this.pictureBox_Map.TabIndex = 0;
             this.pictureBox_Map.TabStop = false;
             this.pictureBox_Map.Click += new System.EventHandler(this.pictureBox_Map_Click);
+            // 
+            // toolStripButton3
+            // 
+            this.toolStripButton3.DisplayStyle = System.Windows.Forms.ToolStripItemDisplayStyle.Text;
+            this.toolStripButton3.Image = ((System.Drawing.Image)(resources.GetObject("toolStripButton3.Image")));
+            this.toolStripButton3.ImageTransparentColor = System.Drawing.Color.Magenta;
+            this.toolStripButton3.Name = "toolStripButton3";
+            this.toolStripButton3.Size = new System.Drawing.Size(93, 22);
+            this.toolStripButton3.Text = "Position Config";
+            this.toolStripButton3.Click += new System.EventHandler(this.toolStripButton3_Click);
             // 
             // MainApp
             // 
@@ -321,5 +334,6 @@
         private System.Windows.Forms.ToolStripButton toolStripButton1;
         private System.Windows.Forms.ToolStripButton toolStripButton2;
         private System.Windows.Forms.ToolStrip toolStrip1;
+        private System.Windows.Forms.ToolStripButton toolStripButton3;
     }
 }

@@ -84,6 +84,12 @@
     <Compile Include="Forms\NewFile.Designer.cs">
       <DependentUpon>NewFile.cs</DependentUpon>
     </Compile>
+    <Compile Include="Forms\PositionConfig.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Forms\PositionConfig.Designer.cs">
+      <DependentUpon>PositionConfig.cs</DependentUpon>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Forms\RotationSettings.cs">
@@ -119,6 +125,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Forms\NewFile.resx">
       <DependentUpon>NewFile.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Forms\PositionConfig.resx">
+      <DependentUpon>PositionConfig.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -160,6 +169,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\VelocityVortexField_2.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Arrow.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

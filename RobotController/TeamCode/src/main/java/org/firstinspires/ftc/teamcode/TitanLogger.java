@@ -26,10 +26,11 @@ import java.util.TimerTask;
 public class TitanLogger {
     Map<String,String> CurrentData =  new HashMap<String,String>();
 
+
     CClient mClient = new CClient();
     Thread myThready = new Thread(mClient);
     Timer sendTimer = new Timer();
-
+    int CurrentIndex;
     public void ConnectToServer() {
         myThready.start();
         sendTimer.scheduleAtFixedRate(new TimerTask() {
@@ -37,10 +38,11 @@ public class TitanLogger {
             public void run() {
                 SendData();
             }
-        }, 1000, 100);//put here time 1000 milliseconds=1 second
+        }, 1000, 500);//put here time 1000 milliseconds=1 second
     }
 
     public void SendData(){
+
         JSONArray finalData = new JSONArray();
         for (Map.Entry<String, String> entry : CurrentData.entrySet()){
             JSONObject newObj = new JSONObject();
@@ -73,7 +75,7 @@ public class TitanLogger {
     public class CClient
             implements Runnable {
         private Socket socket;
-        private String ServerIP = "10.0.0.7";
+        private String ServerIP = "192.168.1.82";
 
 
         public void run() {
@@ -91,7 +93,7 @@ public class TitanLogger {
             try {
                 PrintWriter outToServer = new PrintWriter(new OutputStreamWriter(socket.getOutputStream()));
                 Log.d("NETWORK", s);
-                outToServer.print(s + "\n");
+                outToServer.print(s);
                 outToServer.flush();
 
 

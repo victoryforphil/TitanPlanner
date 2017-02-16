@@ -298,5 +298,18 @@ namespace TitanPlanner
             HardwareMap _window = new HardwareMap();
             _window.ShowDialog();
         }
+
+        private void button_delete_Click(object sender, EventArgs e)
+        {
+            FieldData.Steps.Remove(FieldData.CurrentStep);
+            UpdateTree();
+            DrawWaypoints();
+        }
+
+        private void toolStripButton3_Click(object sender, EventArgs e)
+        {
+            PositionConfig _window = new PositionConfig();
+            _window.ShowDialog();
+        }
     }
 }

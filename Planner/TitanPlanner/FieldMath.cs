@@ -37,7 +37,7 @@ namespace TitanPlanner
     {
 
         public const float FIELD_SIZE = 1000;
-        public const float MAP_SIZE = 700;
+        public const float MAP_SIZE = 525;
 
 
 
@@ -50,8 +50,8 @@ namespace TitanPlanner
 
             float Multiple = FIELD_SIZE / MAP_SIZE;
 
-            _out.X = ScreenCoord.X * Multiple;
-            _out.Y = ScreenCoord.Y * Multiple;
+            _out.X = ScreenCoord.X * (1 / Multiple);
+            _out.Y = ScreenCoord.Y * (1 / Multiple);
                 
             return _out;
         }
@@ -65,7 +65,7 @@ namespace TitanPlanner
             float Multiple = MAP_SIZE / FIELD_SIZE;
 
             _out.X = Coord.X * Multiple;
-            _out.Y = Coord.Y * Multiple;
+            _out.Y = MAP_SIZE - (Coord.Y * Multiple);
 
             return _out;
         }
