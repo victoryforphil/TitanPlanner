@@ -1,3 +1,4 @@
+
 package org.firstinspires.ftc.teamcode;
 
 import android.content.res.AssetManager;
@@ -14,6 +15,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.util.Hardware;
 
 import org.firstinspires.ftc.robotcore.external.Telemetry;
+import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -26,18 +28,25 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.logging.Logger;
+
+import org.firstinspires.ftc.teamcode.TitanPosition.*;
 
 /**
  * Created by VictoryForPhil on 2/11/2017.
  */
 @Autonomous(name="Titan", group="Concept")
+
+
 public class TitanInterpreter extends LinearOpMode{
     private String TitanFileName = "Test.titan";
     private ElapsedTime Runtime = new ElapsedTime();
     private TitanLogger Logger = new TitanLogger();
 
     private ArrayList<Step> Steps = new ArrayList<Step>();
+
 
     private HashMap<String, HardwareDevice> Hardware = new HashMap<String, HardwareDevice>();
     private HashMap<String, ArrayList<MotorSetting>> DriveConfig = new HashMap<String, ArrayList<MotorSetting>>();
@@ -53,7 +62,6 @@ public class TitanInterpreter extends LinearOpMode{
     }
 
 
-
     private class Step{
         public int Type;
         public String Name;
@@ -66,10 +74,23 @@ public class TitanInterpreter extends LinearOpMode{
         public String DeicsionValue;
     }
 
+    public class UltrasonicSetting{
+        public String Name;
+        public String Direction;
+        public double Offset;
+        public UltrasonicSensor Sensor;
+    }
+
+    public class PositionSetting{
+        public boolean UltraEnabled;
+        public ArrayList<UltrasonicSetting> UltraSettings = new ArrayList<UltrasonicSetting>();
+    }
 
     private float TicksPerUnit;
 
+    public PositionSetting PositionSettings;
 
+    private Timer PosTimer = new Timer();
     @Override
     public void runOpMode() throws InterruptedException {
 
@@ -97,8 +118,8 @@ public class TitanInterpreter extends LinearOpMode{
                 JSONObject _titanObject = new JSONObject(ConvertedString);
                 JSONArray _stepArray = _titanObject.getJSONArray("Steps");
 
-                JSONArray _hardwareArray = _titanObject.getJSONArray("Hardware");
-                JSONArray _driveArray = _titanObject.getJSONArray("Drive");
+
+
 
 
                 TrimX = (float)_titanObject.getDouble("TrimX");
@@ -110,7 +131,7 @@ public class TitanInterpreter extends LinearOpMode{
                 Logger.AddData("STEPS", _stepArray.length() + "");
 
 
-
+                // -- STEP LOADING -- //
                 for (int i=0;i<_stepArray.length();i++){
 
                     JSONObject _obj = (JSONObject) _stepArray.get(i);
@@ -131,9 +152,11 @@ public class TitanInterpreter extends LinearOpMode{
                     Steps.add(_newStep);
                 }
 
-                for (int i=0;i<_stepArray.length();i++){
+                JSONArray _hardwareArray = _titanObject.getJSONArray("Hardware");
+                // -- HARDWARE LOADING -- //
+                for (int i=0;i<_hardwareArray.length();i++){
 
-                    JSONObject _obj = (JSONObject) _stepArray.get(i);
+                    JSONObject _obj = (JSONObject) _hardwareArray.get(i);
 
                     String type = _obj.getString("Type");
                     String name = _obj.getString("Name");
@@ -150,6 +173,8 @@ public class TitanInterpreter extends LinearOpMode{
                     }
                 }
 
+                JSONArray _driveArray = _titanObject.getJSONArray("Drive");
+                // -- DRIVE LOADING -- //
                 for (int i=0;i<_driveArray.length();i++){
 
                     JSONObject _obj = (JSONObject) _driveArray.get(i);
@@ -175,12 +200,44 @@ public class TitanInterpreter extends LinearOpMode{
 
                 }
 
+
+                // -- POSITION -- //
+                JSONObject _positionObject = _titanObject.getJSONObject("Position");
+
+                JSONArray _ultrasonicSettings = _positionObject.getJSONArray("UltrasonicSettings");
+
+                for (int i=0;i<_ultrasonicSettings.length();i++){
+
+                    JSONObject _obj = (JSONObject) _hardwareArray.get(i);
+
+                    if(_obj.getBoolean("Enabled") == false){
+                        Logger.AddData(_obj.getString("Name"), "Disabled!");
+                        return;
+                    }
+
+                    UltrasonicSetting _ultra = new UltrasonicSetting();
+
+                    _ultra.Name = _obj.getString("Name");
+                    _ultra.Direction = _obj.getString("Direction");
+                    _ultra.Offset = _obj.getDouble("Offset");
+
+                    PositionSettings.UltraSettings.add(_ultra);
+                    if(Hardware.get( _ultra.Name ) == null){
+                        Logger.AddData(_obj.getString("Name"), "No Hardware!");
+                        return;
+                    }
+                    Logger.AddData(_obj.getString("Name"), "Added!");
+                    _ultra.Sensor = (UltrasonicSensor)Hardware.get( _ultra.Name );
+
+
+
+                }
+
                 Logger.AddData("STATUS", "Loaded: " + Steps.size());
 
             }catch (JSONException ex){
                 Log.e("JSON", ex.getMessage());
             }
-
 
 
         } catch (IOException e) {
@@ -190,6 +247,16 @@ public class TitanInterpreter extends LinearOpMode{
 
 
     public void StartProgram(){
+
+
+        PosTimer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                GetCoord();
+            }
+        }, 0, 10);//put here time 1000 milliseconds=1 second
+
+
         Logger.AddData("STATUS", "Start Program");
         Runtime.startTime();
 
@@ -225,6 +292,18 @@ public class TitanInterpreter extends LinearOpMode{
     double LastY = -1;
 
 
+
+    public TitanVector GetCoord(){
+        TitanVector pos = new TitanVector();
+        if(PositionSettings.UltraEnabled){
+            UltrasonicPosition _pos = new UltrasonicPosition(PositionSettings, Logger);
+            _pos.GetPosition();
+
+            pos =  _pos.GetPosition();
+        }
+        Logger.AddData("Position", pos.X + "/" + pos.Y);
+        return pos;
+    }
 
     public void Blocking_MoveMotor(double CoordX, double CoordY, double Speed){
 
@@ -301,6 +380,7 @@ public class TitanInterpreter extends LinearOpMode{
         }
 
     }
+
 
     public boolean MotorsBusy(ArrayList<String> Motors, boolean first){
         boolean isBusy = false;

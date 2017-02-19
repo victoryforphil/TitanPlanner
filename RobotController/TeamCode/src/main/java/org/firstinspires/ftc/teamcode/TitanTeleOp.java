@@ -42,6 +42,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Timer;
+import java.util.TimerTask;
 
 
 @TeleOp(name="Titan Drive", group="Iterative Opmode")  // @Autonomous(...) is the other common choice
@@ -55,6 +57,18 @@ public class TitanTeleOp extends OpMode
     private DcMotor rearLeft = null;
     private DcMotor rearRight = null;
 
+    private DcMotor leftLift = null;
+    private DcMotor rightLift = null;
+
+    private DcMotor leftGrab = null;
+    private DcMotor rightGrab = null;
+
+
+    private boolean isGrabLocked = false;
+
+    Timer Grabtimer = new Timer();
+
+    private double Sensitivity;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -63,13 +77,23 @@ public class TitanTeleOp extends OpMode
         telemetry.addData("Status", "Initialized");
 
 
-        frontLeft = hardwareMap.dcMotor.get("FrontLeft");
+        frontLeft  = hardwareMap.dcMotor.get("FrontLeft");
         frontRight = hardwareMap.dcMotor.get("FrontRight");
+
         frontRight.setDirection(DcMotorSimple.Direction.REVERSE );
-        rearLeft = hardwareMap.dcMotor.get("RearLeft");
-        rearRight = hardwareMap.dcMotor.get("RearRight");
+
+        rearLeft   = hardwareMap.dcMotor.get("RearLeft");
+        rearRight  = hardwareMap.dcMotor.get("RearRight");
+
         rearRight.setDirection(DcMotorSimple.Direction.REVERSE);
 
+        leftLift   = hardwareMap.dcMotor.get("LeftLift");
+        rightLift  = hardwareMap.dcMotor.get("RightLift");
+        rightLift.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        leftGrab   = hardwareMap.dcMotor.get("LeftGrab");
+        rightGrab  = hardwareMap.dcMotor.get("RightGrab");
+        rightGrab.setDirection(DcMotorSimple.Direction.REVERSE);
     }
 
     /*
@@ -96,13 +120,74 @@ public class TitanTeleOp extends OpMode
         telemetry.addData("Status", "Running: " + runtime.toString());
         float X = gamepad1.left_stick_x;
         float Y = gamepad1.left_stick_y;
-        float Z = -gamepad1.right_stick_x;
-        frontLeft.setPower  (Y-X+Z);
-        frontRight.setPower (Y+X-Z);
-        rearRight.setPower  (Y-X-Z);
-        rearLeft.setPower   (Y+X+Z);
-    }
+        float Z = gamepad1.right_stick_x;
+        frontLeft.setPower  ((Y-X+Z)  * Sensitivity);
+        frontRight.setPower ((Y+X-Z)  * Sensitivity);
+        rearRight.setPower  ((Y-X-Z)  * Sensitivity);
+        rearLeft.setPower   ((Y+X+Z)  * Sensitivity);
 
+        //Lift Controls
+
+        leftLift.setPower(gamepad2.left_stick_y);
+        rightLift.setPower(gamepad2.left_stick_y);
+
+        if(gamepad1.dpad_up){
+            Sensitivity += 10;
+        }
+
+        if(gamepad1.dpad_down){
+            Sensitivity -= 10;
+        }
+
+        if(gamepad2.a){
+            isGrabLocked = true;
+        }
+
+        if(gamepad2.b){
+            isGrabLocked = false;
+        }
+
+
+        if(gamepad2.left_bumper == true){
+            leftGrab.setPower(-0.4);
+        }else if(gamepad2.left_trigger > 0){
+            leftGrab.setPower(0.7);
+        }
+        else if(isGrabLocked){
+            leftGrab.setPower(0.7);
+        }else{
+            leftGrab.setPower(0);
+        }
+
+        if(gamepad2.right_bumper == true){
+            rightGrab.setPower(-0.4);
+        }else if(gamepad2.right_trigger > 0) {
+            rightGrab.setPower(0.7);
+        }
+        else if(isGrabLocked){
+            rightGrab.setPower(0.7);
+        }else{
+            rightGrab.setPower(0);
+        }
+
+
+
+        if(gamepad2.x && isGrabLocked == false){
+            leftGrab.setPower(-0.6);
+            rightGrab.setPower(-0.6);
+
+            Grabtimer.scheduleAtFixedRate(new TimerTask() {
+                @Override
+                public void run() {
+                    leftGrab.setPower(0);
+                    rightGrab.setPower(0);
+                }
+            }, 0, 500);//put here time 1000 milliseconds=1 second
+        }
+
+
+
+    }
     /*
      * Code to run ONCE after the driver hits STOP
      */

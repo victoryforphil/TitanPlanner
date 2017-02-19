@@ -18,7 +18,10 @@ namespace TitanPlanner
         private Bitmap OrignalMapImage = null;
         public MainApp()
         {
+            Console.WriteLine("[MainApp] Window Starting.");
             InitializeComponent();
+
+            Console.WriteLine("[MainApp] Window Loaded!");
         }
 
        

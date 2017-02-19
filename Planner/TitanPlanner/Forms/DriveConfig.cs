@@ -17,6 +17,7 @@ namespace TitanPlanner
         {
             public Label MotorName;
             public NumericUpDown Setting;
+            public CheckBox Revrsed; 
         }
 
         public struct DriveUI
@@ -43,11 +44,14 @@ namespace TitanPlanner
                 {
                     foreach (MotorSetting motor in driveConfig.Settings)
                     {
-                        NumericUpDown val = GetMotorValue(driveConfig.Direction, motor.MotorName);
+                        NumericUpDown val = GetMotorValue(driveConfig.Direction, motor.MotorName).Setting;
+                        CheckBox check = GetMotorValue(driveConfig.Direction, motor.MotorName).Revrsed;
                         if (val != null)
                         {
                             
                             val.Value = motor.Setting;
+                            check.Checked = motor.Reversed;
+                            
                         }
                         else
                         {
@@ -63,9 +67,9 @@ namespace TitanPlanner
             }
         }
 
-        private NumericUpDown GetMotorValue(string Direction, string MotorValue)
+        private MotorSettingUI GetMotorValue(string Direction, string MotorValue)
         {
-            NumericUpDown found = null ;
+            MotorSettingUI found = new MotorSettingUI();
             foreach (DriveUI _ui in UIElements)
             {
                 if(_ui.Direction == Direction)
@@ -74,7 +78,8 @@ namespace TitanPlanner
                     {
                         if(_motor.MotorName.Text == MotorValue)
                         {
-                            found = _motor.Setting;
+                            found.Setting = _motor.Setting;
+                            found.Revrsed = _motor.Revrsed;
                         }
                     }
                 }
@@ -126,12 +131,20 @@ namespace TitanPlanner
                     _num.ValueChanged += Update;
                     _panel.Controls.Add(_num);
 
+                    CheckBox _check = new CheckBox();
+                    _check.Text = "Reseved";
+                    _check.CheckedChanged += Update;
+                    _check.Location = new Point(5 + _num.Width + _num.Location.X, 7 + (CurrentMotor * 30));
+                    _panel.Controls.Add(_check);
+
+
                     page.Controls.Add(_panel);
 
                     CurrentMotor++;
                     MotorSettingUI _motorUI = new MotorSettingUI();
                     _motorUI.MotorName = _label;
                     _motorUI.Setting = _num;
+                    _motorUI.Revrsed = _check;
                     
                     _ui.Settings.Add(_motorUI);
                     
@@ -171,6 +184,7 @@ namespace TitanPlanner
                     MotorSetting _motorSetting = new MotorSetting();
                     _motorSetting.MotorName = _motor.MotorName.Text;
                     _motorSetting.Setting = (int)_motor.Setting.Value;
+                    _motorSetting.Reversed = _motor.Revrsed.Checked;
                     _config.Settings.Add(_motorSetting);
                 }
 

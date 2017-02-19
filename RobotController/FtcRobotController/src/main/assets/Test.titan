@@ -4,222 +4,23 @@
   "TicksPerMeter": 3000.0,
   "TrimX": 100.0,
   "TrimY": 100.0,
-  "Steps": [
-    {
-      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
-      "Coord": {
-        "X": 500.0,
-        "Y": 50.0
-      },
-      "Speed": 1.0,
-      "Type": 1,
-      "ID": 0,
-      "Name": "Waypoint 0",
-      "Delay": 0.0,
-      "ChildSteps": [],
-      "isChild": false
-    },
-    {
-      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
-      "Coord": {
-        "X": 500.0,
-        "Y": 400.0
-      },
-      "Speed": 1.0,
-      "Type": 1,
-      "ID": 1,
-      "Name": "Waypoint 1",
-      "Delay": 3.0,
-      "ChildSteps": [],
-      "isChild": false
-    },
-    {
-      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
-      "Coord": {
-        "X": 600.0,
-        "Y": 500.0
-      },
-      "Speed": 1.0,
-      "Type": 1,
-      "ID": 2,
-      "Name": "Waypoint 2",
-      "Delay": 3.0,
-      "ChildSteps": [],
-      "isChild": false
-    },
-    {
-      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
-      "Coord": {
-        "X": 800.0,
-        "Y": 500.0
-      },
-      "Speed": 1.0,
-      "Type": 1,
-      "ID": 3,
-      "Name": "Waypoint 3",
-      "Delay": 3.0,
-      "ChildSteps": [],
-      "isChild": false
-    },
-    {
-      "$type": "TitanPlanner.WaypointStep, TitanPlanner",
-      "Coord": {
-        "X": 1000.0,
-        "Y": 500.0
-      },
-      "Speed": 1.0,
-      "Type": 1,
-      "ID": 4,
-      "Name": "Waypoint 4",
-      "Delay": 0.0,
-      "ChildSteps": [],
-      "isChild": false
-    }
-  ],
+  "Steps": [],
   "Hardware": [
     {
-      "Name": "1",
-      "Type": "Motor"
-    },
-    {
-      "Name": "2",
-      "Type": "Motor"
-    },
-    {
-      "Name": "3",
-      "Type": "Motor"
-    },
-    {
-      "Name": "4",
-      "Type": "Motor"
+      "Name": "Tseasdas",
+      "Type": "Ultrasonic"
     }
   ],
-  "Drive": [
-    {
-      "Direction": "Forward",
-      "Settings": [
-        {
-          "MotorName": "1",
-          "Setting": 1
-        },
-        {
-          "MotorName": "2",
-          "Setting": 1
-        },
-        {
-          "MotorName": "3",
-          "Setting": 1
-        },
-        {
-          "MotorName": "4",
-          "Setting": 1
-        }
-      ]
-    },
-    {
-      "Direction": "Backward",
-      "Settings": [
-        {
-          "MotorName": "1",
-          "Setting": -1
-        },
-        {
-          "MotorName": "2",
-          "Setting": -1
-        },
-        {
-          "MotorName": "3",
-          "Setting": -1
-        },
-        {
-          "MotorName": "4",
-          "Setting": -1
-        }
-      ]
-    },
-    {
-      "Direction": "Left",
-      "Settings": [
-        {
-          "MotorName": "1",
-          "Setting": 0
-        },
-        {
-          "MotorName": "2",
-          "Setting": 0
-        },
-        {
-          "MotorName": "3",
-          "Setting": 0
-        },
-        {
-          "MotorName": "4",
-          "Setting": 0
-        }
-      ]
-    },
-    {
-      "Direction": "Right",
-      "Settings": [
-        {
-          "MotorName": "1",
-          "Setting": 0
-        },
-        {
-          "MotorName": "2",
-          "Setting": 0
-        },
-        {
-          "MotorName": "3",
-          "Setting": 0
-        },
-        {
-          "MotorName": "4",
-          "Setting": 0
-        }
-      ]
-    },
-    {
-      "Direction": "Turn Left",
-      "Settings": [
-        {
-          "MotorName": "1",
-          "Setting": 0
-        },
-        {
-          "MotorName": "2",
-          "Setting": 0
-        },
-        {
-          "MotorName": "3",
-          "Setting": 0
-        },
-        {
-          "MotorName": "4",
-          "Setting": 0
-        }
-      ]
-    },
-    {
-      "Direction": "Turn Right",
-      "Settings": [
-        {
-          "MotorName": "1",
-          "Setting": 0
-        },
-        {
-          "MotorName": "2",
-          "Setting": 0
-        },
-        {
-          "MotorName": "3",
-          "Setting": 0
-        },
-        {
-          "MotorName": "4",
-          "Setting": 0
-        }
-      ]
-    }
-  ]
+  "Drive": [],
+  "Position": {
+    "UltrasonicSettings": [
+      {
+        "Name": "Tseasdas",
+        "Offset": 0.0,
+        "Direction": "",
+        "Enabled": true
+      }
+    ],
+    "UltrasonicEnabled": false
+  }
 }

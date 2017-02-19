@@ -1,0 +1,114 @@
+{
+  "TicksPerUnit": 10.7999992,
+  "FieldSizeMeters": 3.6,
+  "TicksPerMeter": 3000.0,
+  "TrimX": 100.0,
+  "TrimY": 100.0,
+  "Steps": [],
+  "Hardware": [
+    {
+      "Name": "1",
+      "Type": "Motor"
+    },
+    {
+      "Name": "1",
+      "Type": "Motor"
+    }
+  ],
+  "Drive": [
+    {
+      "Direction": "Forward",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 1,
+          "Reversed": true
+        },
+        {
+          "MotorName": "1",
+          "Setting": 1,
+          "Reversed": true
+        }
+      ]
+    },
+    {
+      "Direction": "Backward",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    },
+    {
+      "Direction": "Left",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    },
+    {
+      "Direction": "Right",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    },
+    {
+      "Direction": "Turn Left",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    },
+    {
+      "Direction": "Turn Right",
+      "Settings": [
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "1",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    }
+  ],
+  "Position": {
+    "UltrasonicSettings": [],
+    "UltrasonicEnabled": false
+  }
+}

@@ -52,3 +52,22 @@ C:\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.WaypointSettings.res
 C:\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.csproj.GenerateResource.Cache
 C:\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.exe
 C:\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.pdb
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\bin\Debug\TitanPlanner.exe.config
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\bin\Debug\TitanPlanner.exe
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\bin\Debug\TitanPlanner.pdb
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\bin\Debug\Newtonsoft.Json.dll
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\bin\Debug\Newtonsoft.Json.xml
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.csprojResolveAssemblyReference.cache
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.DecisionSettings.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.DriveConfig.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.HardwareMap.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.MainApp.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.NewFile.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.PositionConfig.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.Properties.Resources.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.RotationSettings.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.TitanLogger.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.WaypointSettings.resources
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.csproj.GenerateResource.Cache
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.exe
+C:\Users\Titan Apex\Documents\GitHub\TitanPlanner\Planner\TitanPlanner\obj\Debug\TitanPlanner.pdb

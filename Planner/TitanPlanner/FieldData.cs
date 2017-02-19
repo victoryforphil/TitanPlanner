@@ -13,16 +13,33 @@ namespace TitanPlanner
         public string Type;
     }
 
-    public struct MotorSetting
+    public class MotorSetting
     {
         public string MotorName;
         public int Setting;
+        public bool Reversed;
     }
+
     public class DriveMotorConfig
     {
         public string Direction;
         public List<MotorSetting> Settings = new List<MotorSetting>();
     }
+
+    public class UltraSetting
+    {
+        public string Name;
+        public float Offset;
+        public string Direction;
+        public bool Enabled;
+    }
+
+    public class PostitionConfig
+    {
+        public List<UltraSetting> UltrasonicSettings = new List<UltraSetting>();
+        public bool UltrasonicEnabled;
+    }
+
     static class FieldData
     {
         public static List<Step> Steps = new List<Step>();
@@ -31,10 +48,13 @@ namespace TitanPlanner
         public static List<Hardware> hardware = new List<Hardware>();
         public static List<DriveMotorConfig> DriveConfigs = new List<DriveMotorConfig>();
 
+        public static PostitionConfig PositionConfig = new PostitionConfig();
+
         public static float TicksPerMeter = 3000;
         public static float TicksPerUnit = 10;
         public static float TrimX = 100;
         public static float TrimY = 100;
         public static float FieldSizeMeters = 3.6F;
+        
     }
 }
