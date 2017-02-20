@@ -65,10 +65,17 @@ public class TitanTeleOp extends OpMode
 
 
     private boolean isGrabLocked = false;
+    private boolean isQuickReleasing = false;
+
+    boolean DPad_Up_Reset = true;
+    boolean DPad_Down_Reset = true;
 
     Timer Grabtimer = new Timer();
 
-    private double Sensitivity;
+    private double Sensitivity = 1;
+
+    private boolean Reversed = false;
+    private double ResetReverse;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -118,26 +125,30 @@ public class TitanTeleOp extends OpMode
     @Override
     public void loop() {
         telemetry.addData("Status", "Running: " + runtime.toString());
-        float X = gamepad1.left_stick_x;
-        float Y = gamepad1.left_stick_y;
-        float Z = gamepad1.right_stick_x;
-        frontLeft.setPower  ((Y-X+Z)  * Sensitivity);
-        frontRight.setPower ((Y+X-Z)  * Sensitivity);
-        rearRight.setPower  ((Y-X-Z)  * Sensitivity);
-        rearLeft.setPower   ((Y+X+Z)  * Sensitivity);
+        double X = gamepad1.left_stick_x * Sensitivity;
+        double Y = gamepad1.left_stick_y * Sensitivity;
+        double Z = gamepad1.right_stick_x * (  Sensitivity / 2);
+
+        if(Reversed){
+            X = X * -1;
+            Y = Y * -1;
+            Z = Z * -1;
+        }
+
+        frontLeft.setPower  ((Y-X+Z) );
+        frontRight.setPower ((Y+X-Z)  );
+        rearRight.setPower  ((Y-X-Z)  );
+        rearLeft.setPower   ((Y+X+Z) );
+
+
 
         //Lift Controls
 
         leftLift.setPower(gamepad2.left_stick_y);
         rightLift.setPower(gamepad2.left_stick_y);
 
-        if(gamepad1.dpad_up){
-            Sensitivity += 10;
-        }
+        telemetry.addData("Sensitiity", Sensitivity);
 
-        if(gamepad1.dpad_down){
-            Sensitivity -= 10;
-        }
 
         if(gamepad2.a){
             isGrabLocked = true;
@@ -147,43 +158,74 @@ public class TitanTeleOp extends OpMode
             isGrabLocked = false;
         }
 
-
-        if(gamepad2.left_bumper == true){
-            leftGrab.setPower(-0.4);
-        }else if(gamepad2.left_trigger > 0){
-            leftGrab.setPower(0.7);
+        if(gamepad1.y && !Reversed && runtime.seconds() > ResetReverse ){
+            ResetReverse = runtime.seconds() + 0.5;
+            Reversed = !Reversed;
         }
-        else if(isGrabLocked){
-            leftGrab.setPower(0.7);
+
+
+        if(gamepad2.left_bumper ){
+            leftGrab.setPower(-0.3);
+        }else if(gamepad2.left_trigger > 0){
+            leftGrab.setPower(0.3);
+        }
+        else if(isGrabLocked && !isQuickReleasing){
+            leftGrab.setPower(0.4);
+        }
+        else if(isQuickReleasing && isGrabLocked){
+            leftGrab.setPower(-0.2);
         }else{
             leftGrab.setPower(0);
         }
 
-        if(gamepad2.right_bumper == true){
-            rightGrab.setPower(-0.4);
+        if(gamepad2.right_bumper ){
+            rightGrab.setPower(-0.3);
         }else if(gamepad2.right_trigger > 0) {
-            rightGrab.setPower(0.7);
+            rightGrab.setPower(0.3);
         }
-        else if(isGrabLocked){
-            rightGrab.setPower(0.7);
+        else if(isGrabLocked && !isQuickReleasing) {
+            rightGrab.setPower(0.4);
+        }else if(isQuickReleasing && isGrabLocked){
+
+            rightGrab.setPower(-0.2);
         }else{
             rightGrab.setPower(0);
         }
 
 
 
-        if(gamepad2.x && isGrabLocked == false){
-            leftGrab.setPower(-0.6);
-            rightGrab.setPower(-0.6);
+        if(gamepad2.x && isGrabLocked){
+            isQuickReleasing = true;
 
-            Grabtimer.scheduleAtFixedRate(new TimerTask() {
+            Grabtimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
-                    leftGrab.setPower(0);
-                    rightGrab.setPower(0);
+                    isQuickReleasing = false;
+                    isGrabLocked = false;
                 }
-            }, 0, 500);//put here time 1000 milliseconds=1 second
+            }, 400);//put here time 1000 milliseconds=1 second
         }
+
+
+
+        if(gamepad1.dpad_up && DPad_Up_Reset){ // DPAD-UP -> Up Sensitivity (10%)
+            Sensitivity += 0.1;
+            DPad_Up_Reset = false;
+        }
+
+        if(gamepad1.dpad_down && DPad_Down_Reset){ // DPAD-DOWN -> Up Sensitivity (10%)
+            Sensitivity -= 0.1;
+            DPad_Down_Reset = false;
+        }
+
+        if(!gamepad1.dpad_up && !DPad_Up_Reset){ // DPAD-UP Reset (Resets when DPAD is not pressed)
+            DPad_Up_Reset = true;
+        }
+
+        if(!gamepad1.dpad_down && !DPad_Down_Reset){ // DPAD-DOWN Reset (Resets when DPAD is not pressed)
+            DPad_Down_Reset = true;
+        }
+
 
 
 

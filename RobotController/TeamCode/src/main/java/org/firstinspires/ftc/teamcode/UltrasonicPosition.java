@@ -1,8 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
 import java.util.ArrayList;
+import org.firstinspires.ftc.teamcode.TitanInterpreter.*;
 
 public class UltrasonicPosition extends TitanPosition{
+
+    private TitanDenoiser DenoiserX = new TitanDenoiser(3, 20);
+    private TitanDenoiser DenoiserY = new TitanDenoiser(3, 20);
+
     public UltrasonicPosition(TitanInterpreter.PositionSetting _setting , TitanLogger _logger) {
         super(_setting, _logger);
     }
@@ -49,10 +54,11 @@ public class UltrasonicPosition extends TitanPosition{
         TitanInterpreter.UltrasonicSetting ChoosenX = ChooseUltra(XAxisUltras);
         TitanInterpreter.UltrasonicSetting ChoosenY = ChooseUltra(YAxisUltras);
 
+        DenoiserX.Update( ChoosenX.Sensor.getUltrasonicLevel());
+        DenoiserY.Update( ChoosenY.Sensor.getUltrasonicLevel());
 
-
-        FinalX = ChoosenX.Sensor.getUltrasonicLevel() + ChoosenX.Offset;
-        FinalY = ChoosenY.Sensor.getUltrasonicLevel() + ChoosenY.Offset;
+        FinalX = DenoiserX.GetValueDouble() + ChoosenX.Offset;
+        FinalY = DenoiserY.GetValueDouble() + ChoosenY.Offset;
 
 
 

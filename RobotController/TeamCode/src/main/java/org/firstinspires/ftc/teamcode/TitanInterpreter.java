@@ -416,54 +416,6 @@ public class TitanInterpreter extends LinearOpMode{
         }
     }
 
-    private class Denoiser{
-        private ArrayList<Float> AllValues = new ArrayList<Float>();
-        private float CurrentValue;
 
-        private int UpdateRate;
-
-        private int CurrentTick = 0;
-
-        private int OutlierCount = 0;
-        private int OutlierMaxCount = 5;
-        private float OutlierMax;
-
-
-        public Denoiser(int updateRate, float outlierMax){
-            UpdateRate = updateRate;
-            OutlierMax = outlierMax;
-        }
-
-        public void Update(float val){
-            if(CurrentTick >= UpdateRate){
-                AllValues.clear();
-                CurrentTick = 0;
-            }
-
-
-            float lastVal = AllValues.get(AllValues.size() - 1);
-            if(Math.abs(val - lastVal) > OutlierMax && OutlierMaxCount < OutlierCount){
-                Log.d("Desnoiser!", "Outlier: " + val );
-                OutlierCount++;
-                return;
-
-            }else if(OutlierMaxCount >= OutlierCount){
-                AllValues.add(val);
-                OutlierCount = 0;
-            }
-
-            CurrentValue = AllValues.get(AllValues.size());
-
-            CurrentTick++;
-        }
-
-        public float GetValueFloat(){
-            return  CurrentValue;
-        }
-
-        public double GetValueDouble(){
-            return (double)CurrentValue;
-        }
-    }
 
 }
