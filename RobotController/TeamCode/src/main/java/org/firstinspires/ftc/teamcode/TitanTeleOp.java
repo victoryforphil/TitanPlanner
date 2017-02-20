@@ -132,7 +132,7 @@ public class TitanTeleOp extends OpMode
         if(Reversed){
             X = X * -1;
             Y = Y * -1;
-            Z = Z * -1;
+
         }
 
         frontLeft.setPower  ((Y-X+Z) );
@@ -148,6 +148,7 @@ public class TitanTeleOp extends OpMode
         rightLift.setPower(gamepad2.left_stick_y);
 
         telemetry.addData("Sensitiity", Sensitivity);
+        telemetry.addData("Reversed", Reversed);
 
 
         if(gamepad2.a){
@@ -158,7 +159,7 @@ public class TitanTeleOp extends OpMode
             isGrabLocked = false;
         }
 
-        if(gamepad1.y && !Reversed && runtime.seconds() > ResetReverse ){
+        if(gamepad1.y && runtime.seconds() > ResetReverse ){
             ResetReverse = runtime.seconds() + 0.5;
             Reversed = !Reversed;
         }

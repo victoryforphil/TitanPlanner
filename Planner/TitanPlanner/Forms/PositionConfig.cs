@@ -125,6 +125,7 @@ namespace TitanPlanner
             }
 
             FieldData.PositionConfig.UltrasonicEnabled = checkBox_unltraEnabled.Checked;
+            FieldData.PositionConfig.FieldSizeCM = (float)numericUpDown_fieldsize.Value;
         }
     }
 }

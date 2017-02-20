@@ -39,6 +39,7 @@ namespace TitanPlanner
     {
         public List<UltraSetting> UltrasonicSettings = new List<UltraSetting>();
         public bool UltrasonicEnabled;
+        public float FieldSizeCM;
     }
 
     static class FieldData

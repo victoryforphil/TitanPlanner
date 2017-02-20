@@ -84,6 +84,7 @@ public class TitanInterpreter extends LinearOpMode{
     public class PositionSetting{
         public boolean UltraEnabled;
         public ArrayList<UltrasonicSetting> UltraSettings = new ArrayList<UltrasonicSetting>();
+        public double FieldSize;
     }
 
     private float TicksPerUnit;
@@ -201,9 +202,10 @@ public class TitanInterpreter extends LinearOpMode{
                 }
 
 
+
                 // -- POSITION -- //
                 JSONObject _positionObject = _titanObject.getJSONObject("Position");
-
+                PositionSettings.FieldSize = _positionObject.getDouble("FieldSizeCM");
                 JSONArray _ultrasonicSettings = _positionObject.getJSONArray("UltrasonicSettings");
 
                 for (int i=0;i<_ultrasonicSettings.length();i++){

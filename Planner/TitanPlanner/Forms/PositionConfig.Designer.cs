@@ -39,13 +39,13 @@
             this.checkBox2 = new System.Windows.Forms.CheckBox();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
+            this.numericUpDown_fieldsize = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.groupBox4.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fieldsize)).BeginInit();
             this.SuspendLayout();
             // 
             // groupBox1
@@ -159,28 +159,29 @@
             this.checkBox1.Text = "Enable";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
-            // numericUpDown1
+            // numericUpDown_fieldsize
             // 
-            this.numericUpDown1.DecimalPlaces = 3;
-            this.numericUpDown1.Increment = new decimal(new int[] {
+            this.numericUpDown_fieldsize.DecimalPlaces = 3;
+            this.numericUpDown_fieldsize.Increment = new decimal(new int[] {
             10,
             0,
             0,
             0});
-            this.numericUpDown1.Location = new System.Drawing.Point(95, 374);
-            this.numericUpDown1.Maximum = new decimal(new int[] {
+            this.numericUpDown_fieldsize.Location = new System.Drawing.Point(95, 374);
+            this.numericUpDown_fieldsize.Maximum = new decimal(new int[] {
             1000,
             0,
             0,
             0});
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(82, 20);
-            this.numericUpDown1.TabIndex = 4;
-            this.numericUpDown1.Value = new decimal(new int[] {
+            this.numericUpDown_fieldsize.Name = "numericUpDown_fieldsize";
+            this.numericUpDown_fieldsize.Size = new System.Drawing.Size(82, 20);
+            this.numericUpDown_fieldsize.TabIndex = 4;
+            this.numericUpDown_fieldsize.Value = new decimal(new int[] {
             36576,
             0,
             0,
             131072});
+            this.numericUpDown_fieldsize.ValueChanged += new System.EventHandler(this.Update);
             // 
             // label2
             // 
@@ -197,7 +198,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(782, 402);
             this.Controls.Add(this.label2);
-            this.Controls.Add(this.numericUpDown1);
+            this.Controls.Add(this.numericUpDown_fieldsize);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox2);
@@ -213,7 +214,7 @@
             this.groupBox3.PerformLayout();
             this.groupBox4.ResumeLayout(false);
             this.groupBox4.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown_fieldsize)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -232,7 +233,7 @@
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.Panel panel_ultra;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
+        private System.Windows.Forms.NumericUpDown numericUpDown_fieldsize;
         private System.Windows.Forms.Label label2;
     }
 }
