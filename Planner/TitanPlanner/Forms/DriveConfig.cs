@@ -11,186 +11,92 @@ using System.Windows.Forms;
 namespace TitanPlanner
 {
     public partial class DriveConfig : Form
-    {
-        bool blockUpdate = false;
-        public struct MotorSettingUI
-        {
-            public Label MotorName;
-            public NumericUpDown Setting;
-            public CheckBox Revrsed; 
-        }
-
-        public struct DriveUI
-        {
-            public string Direction;
-            public List<MotorSettingUI> Settings;
-        }
-
-        public List<DriveUI> UIElements = new List<DriveUI>();
-
-        public String[] Directions = { "Forward", "Backward", "Left", "Right", "Turn Left", "Turn Right" };
+    { 
 
         public DriveConfig()
         {
             InitializeComponent();
-        }
-
-        public void LoadData()
-        {
-            try
-            {
-                blockUpdate = true;
-                foreach (DriveMotorConfig driveConfig in FieldData.DriveConfigs)
-                {
-                    foreach (MotorSetting motor in driveConfig.Settings)
-                    {
-                        NumericUpDown val = GetMotorValue(driveConfig.Direction, motor.MotorName).Setting;
-                        CheckBox check = GetMotorValue(driveConfig.Direction, motor.MotorName).Revrsed;
-                        if (val != null)
-                        {
-                            
-                            val.Value = motor.Setting;
-                            check.Checked = motor.Reversed;
-                            
-                        }
-                        else
-                        {
-                            Console.WriteLine("No Motor value for: " + motor.MotorName + " in: " + driveConfig.Direction);
-                        }
-                    }
-                }
-                blockUpdate = false;
-            }
-            catch(Exception e)
-            {
-               
-            }
-        }
-
-        private MotorSettingUI GetMotorValue(string Direction, string MotorValue)
-        {
-            MotorSettingUI found = new MotorSettingUI();
-            foreach (DriveUI _ui in UIElements)
-            {
-                if(_ui.Direction == Direction)
-                {
-                    foreach (MotorSettingUI _motor in _ui.Settings)
-                    {
-                        if(_motor.MotorName.Text == MotorValue)
-                        {
-                            found.Setting = _motor.Setting;
-                            found.Revrsed = _motor.Revrsed;
-                        }
-                    }
-                }
-                
-
-                
-            }
-            return found;
+            LoadData();
         }
 
         private void DriveConfig_Load(object sender, EventArgs e)
         {
-            tabControl1.TabPages.Clear();
-            UIElements.Clear();
-            foreach(String _direction in Directions)
-            {
-                TabPage page = new TabPage(_direction);
-                page.Width = tabControl1.Width;
-                page.Height = tabControl1.Height - 10;
-                DriveUI _ui = new DriveUI();
-                _ui.Direction = _direction;
 
-                _ui.Settings = new List<MotorSettingUI>();
-                int CurrentMotor = 0;
-                Panel _panel = new Panel();
-                _panel.Width = page.Width - 5;
-                _panel.Height = page.Height - 10;
-                _panel.AutoScroll = true;
-                _panel.Margin = new Padding(0);
-                _panel.Location = new Point(0, 0);
-
-                foreach (String _motor in GetMotors())
-                {
-                    
-
-                    Label _label = new Label();
-                    _label.Text = _motor;
-                    _label.Width = 50;
-                    _label.Margin = new Padding(5);
-                    _label.Location = new Point(5, 10 + (CurrentMotor * 30));
-                    _panel.Controls.Add(_label);
-
-                    NumericUpDown _num = new NumericUpDown();
-                    _num.Maximum = 1;
-                    _num.Minimum = -1;
-                    _num.Increment = 1;
-                    _num.Width = 50;
-                    _num.Location = new Point(5 + _label.Width, 7 + (CurrentMotor * 30));
-                    _num.ValueChanged += Update;
-                    _panel.Controls.Add(_num);
-
-                    CheckBox _check = new CheckBox();
-                    _check.Text = "Reseved";
-                    _check.CheckedChanged += Update;
-                    _check.Location = new Point(5 + _num.Width + _num.Location.X, 7 + (CurrentMotor * 30));
-                    _panel.Controls.Add(_check);
+            textBox_FL.TextChanged += OnUpdate;
+            textBox_FR.TextChanged += OnUpdate;
+            textBox_RL.TextChanged += OnUpdate;
+            textBox_RR.TextChanged += OnUpdate;
 
 
-                    page.Controls.Add(_panel);
-
-                    CurrentMotor++;
-                    MotorSettingUI _motorUI = new MotorSettingUI();
-                    _motorUI.MotorName = _label;
-                    _motorUI.Setting = _num;
-                    _motorUI.Revrsed = _check;
-                    
-                    _ui.Settings.Add(_motorUI);
-                    
-                }
-
-
-                UIElements.Add(_ui);
-                tabControl1.TabPages.Add(page);
-            }
-            LoadData();
         }
 
-        private List<String> GetMotors()
+        private void LoadData()
         {
-            List<String> final = new List<String>();
-            foreach(Hardware _hardware in FieldData.hardware)
+            if (FieldData.DriveConfig.Type == "HOLONOMIC")
             {
-                if(_hardware.Type == "Motor")
+                foreach(MotorSetting _setting in FieldData.DriveConfig.Settings)
                 {
-                    final.Add(_hardware.Name);
+                    switch (_setting.Position)
+                    {
+                        case "FRONT_LEFT":
+                            textBox_FL.Text = _setting.MotorName;
+                            checkBox_FL_Reversed.Checked = _setting.Reversed;
+                        break;
+
+                        case "FRONT_RIGHT":
+                            textBox_FR.Text = _setting.MotorName;
+                            checkBox_FR_Reversed.Checked = _setting.Reversed;
+                            break;
+                        case "REAR_LEFT":
+                            textBox_RL.Text = _setting.MotorName;
+                            checkBox_RL_Reversed.Checked = _setting.Reversed;
+                            break;
+                        case "REAR_RIGHT":
+                            textBox_RR.Text = _setting.MotorName;
+                            checkBox_RR_Reversed.Checked = _setting.Reversed;
+                            break;
+
+                    }
                 }
             }
-            return final;
         }
 
-
-        private void Update(object sender, EventArgs e)
+        public void OnUpdate(object sender, EventArgs e)
         {
-            if (blockUpdate) { return; }
-            FieldData.DriveConfigs.Clear();
-            foreach (DriveUI _ui in UIElements)
-            {
-                DriveMotorConfig _config = new DriveMotorConfig();
-                _config.Direction = _ui.Direction;
-                foreach(MotorSettingUI _motor in _ui.Settings)
-                {
-                    MotorSetting _motorSetting = new MotorSetting();
-                    _motorSetting.MotorName = _motor.MotorName.Text;
-                    _motorSetting.Setting = (int)_motor.Setting.Value;
-                    _motorSetting.Reversed = _motor.Revrsed.Checked;
-                    _config.Settings.Add(_motorSetting);
-                }
+            FieldData.DriveConfig.Settings.Clear();
 
-                FieldData.DriveConfigs.Add(_config);
-            }
+            MotorSetting FLMotor = new MotorSetting();
+            FLMotor.MotorName = textBox_FL.Text;
+            FLMotor.Reversed = checkBox_FL_Reversed.Checked;
+            FLMotor.Position = "FRONT_LEFT";
+
+            MotorSetting FRMotor = new MotorSetting();
+            FRMotor.MotorName = textBox_FR.Text;
+            FRMotor.Reversed = checkBox_FR_Reversed.Checked;
+            FRMotor.Position = "FRONT_RIGHT";
+
+            MotorSetting RLMotor = new MotorSetting();
+            RLMotor.MotorName = textBox_RL.Text;
+            RLMotor.Reversed = checkBox_RL_Reversed.Checked;
+            RLMotor.Position = "REAR_LEFT";
+
+            MotorSetting RRMotor = new MotorSetting();
+            RRMotor.MotorName = textBox_RR.Text;
+            RRMotor.Reversed = checkBox_RR_Reversed.Checked;
+            RRMotor.Position = "REAR_RIGHT";
+
+            FieldData.DriveConfig.Settings.Add(FLMotor);
+            FieldData.DriveConfig.Settings.Add(FRMotor);
+            FieldData.DriveConfig.Settings.Add(RLMotor);
+            FieldData.DriveConfig.Settings.Add(RRMotor);
+
+            FieldData.DriveConfig.Type = "HOLONOMIC";
+
         }
-        
+
+        private void comboBox1_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            
+        }
     }
 }

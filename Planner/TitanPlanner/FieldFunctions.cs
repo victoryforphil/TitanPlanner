@@ -15,7 +15,7 @@ namespace TitanPlanner
         public float TrimY;
         public List<Step> Steps = new List<Step>();
         public List<TitanPlanner.Hardware> Hardware = new List<TitanPlanner.Hardware>();
-        public List<TitanPlanner.DriveMotorConfig> Drive = new List<TitanPlanner.DriveMotorConfig>();
+        public DriveMotorConfig Drive = new DriveMotorConfig();
         public PostitionConfig Position = new PostitionConfig();
        
     }
@@ -106,9 +106,11 @@ namespace TitanPlanner
             exportobj.FieldSizeMeters = FieldData.FieldSizeMeters;
             exportobj.Steps           = FieldData.Steps;
             exportobj.Hardware        = FieldData.hardware;
-            exportobj.Drive           = FieldData.DriveConfigs;
+            exportobj.Drive           = FieldData.DriveConfig;
             exportobj.Position        = FieldData.PositionConfig;
 
+
+            Console.WriteLine(FieldData.DriveConfig.Type);
 
             string json = JsonConvert.SerializeObject(exportobj, settings);
             Console.WriteLine("[FieldFunctions] Exported File" + json);

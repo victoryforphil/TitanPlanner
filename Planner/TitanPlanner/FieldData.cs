@@ -16,13 +16,14 @@ namespace TitanPlanner
     public class MotorSetting
     {
         public string MotorName;
-        public int Setting;
         public bool Reversed;
+        public string Position;
     }
 
     public class DriveMotorConfig
     {
-        public string Direction;
+        public string Type;
+        
         public List<MotorSetting> Settings = new List<MotorSetting>();
     }
 
@@ -46,7 +47,7 @@ namespace TitanPlanner
         public static Step CurrentStep;
 
         public static List<Hardware> hardware = new List<Hardware>();
-        public static List<DriveMotorConfig> DriveConfigs = new List<DriveMotorConfig>();
+        public static DriveMotorConfig DriveConfig = new DriveMotorConfig();
 
         public static PostitionConfig PositionConfig = new PostitionConfig();
 

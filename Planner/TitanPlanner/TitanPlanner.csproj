@@ -173,5 +173,11 @@
   <ItemGroup>
     <None Include="Resources\Arrow.png" />
   </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Holonomic_Drive.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Holonomic_Drive%402x.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

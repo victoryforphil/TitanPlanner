@@ -1,0 +1,55 @@
+{
+  "TicksPerUnit": 10.7999992,
+  "FieldSizeMeters": 3.6,
+  "TicksPerMeter": 3000.0,
+  "TrimX": 100.0,
+  "TrimY": 100.0,
+  "Steps": [],
+  "Hardware": [
+    {
+      "Name": "1",
+      "Type": "Motor"
+    },
+    {
+      "Name": "2",
+      "Type": "Motor"
+    },
+    {
+      "Name": "3",
+      "Type": "Motor"
+    },
+    {
+      "Name": "4",
+      "Type": "Motor"
+    }
+  ],
+  "Drive": {
+    "Type": "HOLONOMIC",
+    "Settings": [
+      {
+        "MotorName": "T1",
+        "Reversed": false,
+        "Position": "FRONT_LEFT"
+      },
+      {
+        "MotorName": "3",
+        "Reversed": false,
+        "Position": "FRONT_RIGHT"
+      },
+      {
+        "MotorName": "132",
+        "Reversed": false,
+        "Position": "REAR_LEFT"
+      },
+      {
+        "MotorName": "123313",
+        "Reversed": false,
+        "Position": "REAR_RIGHT"
+      }
+    ]
+  },
+  "Position": {
+    "UltrasonicSettings": [],
+    "UltrasonicEnabled": false
+  }
+}

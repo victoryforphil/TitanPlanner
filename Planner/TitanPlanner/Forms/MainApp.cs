@@ -262,7 +262,7 @@ namespace TitanPlanner
                     FieldData.TicksPerMeter = m.TicksPerMeter;
                     FieldData.TicksPerUnit = m.TicksPerUnit;
                     FieldData.hardware = m.Hardware;
-                    FieldData.DriveConfigs = m.Drive;
+                    FieldData.DriveConfig = m.Drive;
 
                     nud_TicksPerMeter.Value = (decimal)FieldData.TicksPerMeter;
                     numericUpDown1.Value = (decimal)FieldData.FieldSizeMeters;
