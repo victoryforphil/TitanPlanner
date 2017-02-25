@@ -19,8 +19,8 @@ import org.opencv.core.Size;
 /**
  * Created by Titan Apex on 2/20/2017.
  */
-@Autonomous(name="Titan Backup | Red 1", group="Concept")
-public class TitanBackupAuto_Red_1 extends LinearVisionOpMode {
+@Autonomous(name="Titan Backup | Red Center", group="Concept")
+public class TitanAuto_Red_Center extends LinearVisionOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontLeft = null;
     private DcMotor frontRight = null;
@@ -275,18 +275,29 @@ public class TitanBackupAuto_Red_1 extends LinearVisionOpMode {
         rearRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
 
 
-        while(opModeIsActive() && gyro.getHeading() != angle )
+        double CurrentHeading = gyro.getHeading();
+
+        if(CurrentHeading > 180){
+            CurrentHeading = CurrentHeading - 360;
+        }
+
+        while(opModeIsActive() && CurrentHeading != angle )
         {
+            CurrentHeading = gyro.getHeading();
+            if(CurrentHeading > 180){
+                CurrentHeading = CurrentHeading - 360;
+            }
+
             telemetry.addData("Gyro", gyro.getHeading());
             telemetry.update();
             double MotorPower = speed;
 
-            if(gyro.getHeading() > angle) {
+            if(CurrentHeading > angle) {
                 MotorPower = MotorPower * -1;
             }
 
 
-            if(Math.abs(angle - gyro.getHeading()) <= 15){
+            if(Math.abs(angle -CurrentHeading) <= 15){
                 MotorPower = MotorPower * 0.25;
                 telemetry.addData("Gyro Speed", "REDUCE SPEED");
                 telemetry.update();

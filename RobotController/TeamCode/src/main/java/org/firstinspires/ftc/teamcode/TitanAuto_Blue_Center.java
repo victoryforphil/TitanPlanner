@@ -19,8 +19,8 @@ import org.opencv.core.Size;
 /**
  * Created by Titan Apex on 2/20/2017.
  */
-@Autonomous(name="Titan Backup | Blue 1", group="Concept")
-public class TitanBackupAuto_Blue_1 extends LinearVisionOpMode {
+@Autonomous(name="Titan Backup | Blue Center", group="Backup")
+public class TitanAuto_Blue_Center extends LinearVisionOpMode {
     private ElapsedTime runtime = new ElapsedTime();
     private DcMotor frontLeft = null;
     private DcMotor frontRight = null;
