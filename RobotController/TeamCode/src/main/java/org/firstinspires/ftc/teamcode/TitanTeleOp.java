@@ -32,6 +32,8 @@ THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 */
 package org.firstinspires.ftc.teamcode;
 
+import android.media.MediaPlayer;
+
 import com.qualcomm.robotcore.eventloop.opmode.Disabled;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
@@ -76,6 +78,11 @@ public class TitanTeleOp extends OpMode
 
     private boolean Reversed = false;
     private double ResetReverse;
+
+    MediaPlayer media_Sneaky = null;
+
+    MediaPlayer media_RiseUp = null;
+    MediaPlayer media_Drop = null;
     /*
      * Code to run ONCE when the driver hits INIT
      */
@@ -101,6 +108,11 @@ public class TitanTeleOp extends OpMode
         leftGrab   = hardwareMap.dcMotor.get("LeftGrab");
         rightGrab  = hardwareMap.dcMotor.get("RightGrab");
         rightGrab.setDirection(DcMotorSimple.Direction.REVERSE);
+
+        media_Sneaky = MediaPlayer.create(hardwareMap.appContext, R.raw.sneaky);
+        media_RiseUp = MediaPlayer.create(hardwareMap.appContext, R.raw.rise_up);
+        media_Drop = MediaPlayer.create(hardwareMap.appContext, R.raw.drop_the_bass);
+
     }
 
     /*
@@ -112,7 +124,7 @@ public class TitanTeleOp extends OpMode
     }
 
     /*
-     * Code to run ONCE when the driver hits PLAY
+     * Code to run ONCE when the driver hits PL+AY
      */
     @Override
     public void start() {
@@ -127,7 +139,11 @@ public class TitanTeleOp extends OpMode
         telemetry.addData("Status", "Running: " + runtime.toString());
         double X = gamepad1.left_stick_x * Sensitivity;
         double Y = gamepad1.left_stick_y * Sensitivity;
-        double Z = gamepad1.right_stick_x * (  Sensitivity / 2);
+        double Z = gamepad1.right_stick_x  * Sensitivity;
+
+        if(Sensitivity <= 0.60){
+            Z = Z / 2;
+        }
 
         if(Reversed){
             X = X * -1;
@@ -143,7 +159,20 @@ public class TitanTeleOp extends OpMode
 
 
         //Lift Controls
+        if(gamepad2.start){
+            if(media_Sneaky.isPlaying()){
+                media_Sneaky.stop();
+            }
 
+            if(media_RiseUp.isPlaying()){
+                media_RiseUp.stop();
+            }
+
+            media_RiseUp.start();
+            media_RiseUp.setLooping(true);
+
+
+        }
         leftLift.setPower(gamepad2.left_stick_y);
         rightLift.setPower(gamepad2.left_stick_y);
 
@@ -153,6 +182,8 @@ public class TitanTeleOp extends OpMode
 
         if(gamepad2.a){
             isGrabLocked = true;
+
+            media_Sneaky.start();
         }
 
         if(gamepad2.b){
@@ -197,7 +228,10 @@ public class TitanTeleOp extends OpMode
 
         if(gamepad2.x && isGrabLocked){
             isQuickReleasing = true;
-
+            if(media_RiseUp.isPlaying()){
+                media_RiseUp.stop();
+            }
+            media_Drop.start();
             Grabtimer.schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -236,6 +270,9 @@ public class TitanTeleOp extends OpMode
      */
     @Override
     public void stop() {
+        media_RiseUp.stop();
+        media_Sneaky.stop();
+        media_Drop.stop();
     }
 
 }

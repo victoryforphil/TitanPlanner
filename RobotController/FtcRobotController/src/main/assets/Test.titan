@@ -7,20 +7,198 @@
   "Steps": [],
   "Hardware": [
     {
-      "Name": "Tseasdas",
+      "Name": "Ultra1",
       "Type": "Ultrasonic"
+    },
+    {
+      "Name": "Ultra2",
+      "Type": "Ultrasonic"
+    },
+    {
+      "Name": "FrontLeft",
+      "Type": "Motor"
+    },
+    {
+      "Name": "FrontRight",
+      "Type": "Motor"
+    },
+    {
+      "Name": "RearLeft",
+      "Type": "Motor"
+    },
+    {
+      "Name": "RearRight",
+      "Type": "Motor"
     }
   ],
-  "Drive": [],
+  "Drive": [
+    {
+      "Direction": "Forward",
+      "Settings": [
+        {
+          "MotorName": "FrontLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "FrontRight",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearRight",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    },
+    {
+      "Direction": "Backward",
+      "Settings": [
+        {
+          "MotorName": "FrontLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "FrontRight",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearRight",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    },
+    {
+      "Direction": "Left",
+      "Settings": [
+        {
+          "MotorName": "FrontLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "FrontRight",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearRight",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    },
+    {
+      "Direction": "Right",
+      "Settings": [
+        {
+          "MotorName": "FrontLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "FrontRight",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearRight",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    },
+    {
+      "Direction": "Turn Left",
+      "Settings": [
+        {
+          "MotorName": "FrontLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "FrontRight",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearRight",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    },
+    {
+      "Direction": "Turn Right",
+      "Settings": [
+        {
+          "MotorName": "FrontLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "FrontRight",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearLeft",
+          "Setting": 0,
+          "Reversed": false
+        },
+        {
+          "MotorName": "RearRight",
+          "Setting": 0,
+          "Reversed": false
+        }
+      ]
+    }
+  ],
   "Position": {
     "UltrasonicSettings": [
       {
-        "Name": "Tseasdas",
+        "Name": "Ultra1",
         "Offset": 0.0,
-        "Direction": "",
+        "Direction": "Foward",
+        "Enabled": true
+      },
+      {
+        "Name": "Ultra2",
+        "Offset": 0.0,
+        "Direction": "Right",
         "Enabled": true
       }
     ],
-    "UltrasonicEnabled": false
+    "UltrasonicEnabled": true,
+    "FieldSizeCM": 355.76
   }
 }

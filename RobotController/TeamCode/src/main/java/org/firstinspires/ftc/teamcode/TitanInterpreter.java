@@ -3,40 +3,26 @@ package org.firstinspires.ftc.teamcode;
 
 import android.content.res.AssetManager;
 import android.util.Log;
-import android.util.Xml;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.HardwareDevice;
-import com.qualcomm.robotcore.hardware.HardwareMap;
 import com.qualcomm.robotcore.hardware.UltrasonicSensor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.util.Hardware;
 
-import org.firstinspires.ftc.robotcore.external.Telemetry;
-import org.firstinspires.ftc.robotcore.external.matrices.VectorF;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.lang.reflect.Array;
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
-import java.util.logging.Logger;
 
-import org.firstinspires.ftc.teamcode.TitanPosition.*;
-
-/**
- * Created by VictoryForPhil on 2/11/2017.
- */
 @Autonomous(name="Titan", group="Concept")
 
 
@@ -59,6 +45,7 @@ public class TitanInterpreter extends LinearOpMode{
     private class MotorSetting{
         public String Name;
         public int Value;
+
     }
 
 
@@ -79,6 +66,7 @@ public class TitanInterpreter extends LinearOpMode{
         public String Direction;
         public double Offset;
         public UltrasonicSensor Sensor;
+        public TitanDenoiser Denoiser = new TitanDenoiser(3,10);
     }
 
     public class PositionSetting{
@@ -167,9 +155,13 @@ public class TitanInterpreter extends LinearOpMode{
                             break;
                         case "Motor":
                             Hardware.put(name, hardwareMap.dcMotor.get(name));
+
                             break;
                         case "Servo":
                             Hardware.put(name, hardwareMap.servo.get(name));
+                            break;
+                        case "Gyro":
+                            Hardware.put(name, hardwareMap.gyroSensor.get(name));
                             break;
                     }
                 }
@@ -205,7 +197,7 @@ public class TitanInterpreter extends LinearOpMode{
 
                 // -- POSITION -- //
                 JSONObject _positionObject = _titanObject.getJSONObject("Position");
-                PositionSettings.FieldSize = _positionObject.getDouble("FieldSizeCM");
+                PositionSettings.FieldSize = 365.7;
                 JSONArray _ultrasonicSettings = _positionObject.getJSONArray("UltrasonicSettings");
 
                 for (int i=0;i<_ultrasonicSettings.length();i++){
@@ -298,10 +290,8 @@ public class TitanInterpreter extends LinearOpMode{
     public TitanVector GetCoord(){
         TitanVector pos = new TitanVector();
         if(PositionSettings.UltraEnabled){
-            UltrasonicPosition _pos = new UltrasonicPosition(PositionSettings, Logger);
-            _pos.GetPosition();
 
-            pos =  _pos.GetPosition();
+            pos =  GetUltrasonicPosition();
         }
         Logger.AddData("Position", pos.X + "/" + pos.Y);
         return pos;
@@ -332,55 +322,46 @@ public class TitanInterpreter extends LinearOpMode{
         Map<String, Integer> MotorDirections = new HashMap<String, Integer>();
         ArrayList<String> MotorsTrack = new ArrayList<String>();
         Logger.AddData("MoveMotor",  EncoderX + "/" + EncoderY );
-        if(EncoderX > 0){
-            for(int i=0; i<DriveConfig.get("Forward").size();i++){
-                MotorSetting _motor = DriveConfig.get("Forward").get(0);
 
-                if(_motor.Value == 0){
-                    return;
-                }
+        DcMotor frontLeft = (DcMotor)Hardware.get("FrontLeft");
+        DcMotor frontRight =  (DcMotor)Hardware.get("FrontRight");
+        DcMotor rearLeft = (DcMotor)Hardware.get("ReartLeft");
+        DcMotor rearRight =  (DcMotor)Hardware.get("RearRight");
 
-                if(Hardware.get(_motor.Name) != null){
-                    DcMotor _dcMotor = (DcMotor)Hardware.get(_motor.Name);
-                    _dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    _dcMotor.setPower(Speed * DirMultiplyerX * _motor.Value);
-                    _dcMotor.setTargetPosition(_dcMotor.getCurrentPosition() + (int)EncoderX);
-                    MotorsTrack.add(_motor.Name);
+        double X = DirMultiplyerX;
+        double Y = DirMulitplyerY;
+        double Z = 0;
 
-                }
-
-
-            }
-        }
-
-        if(EncoderY > 0){
-            for(int i=0; i<DriveConfig.get("Right").size();i++){
-                MotorSetting _motor = DriveConfig.get("Right").get(0);
-
-                if(_motor.Value == 0){
-                    return;
-                }
-
-                if(Hardware.get(_motor.Name) != null){
-                    DcMotor _dcMotor = (DcMotor)Hardware.get(_motor.Name);
-                    _dcMotor.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-                    _dcMotor.setPower(Speed * DirMulitplyerY * _motor.Value);
-                    _dcMotor.setTargetPosition(_dcMotor.getCurrentPosition() + (int)EncoderY);
-                    MotorsTrack.add(_motor.Name);
-
-                }
+        //frontLeft.setPower  (Y-X+Z);
+        //frontRight.setPower (Y+X-Z);
+       /// rearRight.setPower  (Y-X-Z);
+        //rearLeft.setPower   (Y+X+Z);
 
 
 
-            }
-        }
         LastX = CoordX;
         LastY = CoordY;
 
-        while(MotorsBusy(MotorsTrack, false)){
+        while(AtCoord(new TitanVector(CoordX, CoordY), 5)){
 
         }
 
+    }
+
+    public boolean AtCoord(TitanVector Target, double error){
+        TitanVector _pos = GetCoord();
+
+        boolean atTarget = true;
+
+        if(Math.abs(_pos.X - Target.X) > error){
+            atTarget = false;
+        }
+
+        if(Math.abs(_pos.Y - Target.Y) > error){
+            atTarget = false;
+        }
+
+        return atTarget;
     }
 
 
@@ -418,6 +399,63 @@ public class TitanInterpreter extends LinearOpMode{
         }
     }
 
+
+    public TitanVector GetUltrasonicPosition(){
+
+        double FinalX = 0;
+        double FinalY = 0;
+
+        TitanVector Pos = new TitanVector();
+
+        ArrayList<UltrasonicSetting> XAxisUltras = new ArrayList<>();
+        ArrayList<UltrasonicSetting> YAxisUltras = new ArrayList<>();
+        for(int i=0; i<PositionSettings.UltraSettings.size();i++){
+            UltrasonicSetting _cur = PositionSettings.UltraSettings.get(i);
+
+            if(_cur.Direction == "Left"){
+                _cur.Offset = _cur.Offset * - 1;
+                XAxisUltras.add(_cur);
+            }
+
+            if(_cur.Direction == "Right"){
+
+                XAxisUltras.add(_cur);
+            }
+
+            if(_cur.Direction == "Backward"){
+                _cur.Offset = _cur.Offset * -1 ;
+                YAxisUltras.add(_cur);
+            }
+
+            if(_cur.Direction == "Forward"){
+                YAxisUltras.add(_cur);
+            }
+        }
+
+
+
+        TitanInterpreter.UltrasonicSetting ChoosenX = ChooseUltra(XAxisUltras);
+        TitanInterpreter.UltrasonicSetting ChoosenY = ChooseUltra(YAxisUltras);
+
+        ChoosenX.Denoiser.Update(ChoosenX.Sensor.getUltrasonicLevel());
+        ChoosenY.Denoiser.Update(ChoosenY.Sensor.getUltrasonicLevel());
+
+        FinalX = ( ChoosenX.Denoiser.GetValueDouble() + ChoosenX.Offset) * (PositionSettings.FieldSize / 1000);
+        FinalY = ( ChoosenY.Denoiser.GetValueDouble() + ChoosenY.Offset)  * (PositionSettings.FieldSize / 1000);
+
+
+
+        Pos.X = FinalX;
+        Pos.Y = FinalY;
+        Pos.isOverride = false;
+        Logger.AddData("ULTRA POS", FinalX + "/" + FinalY);
+        return Pos;
+    }
+
+    public TitanInterpreter.UltrasonicSetting ChooseUltra(ArrayList<TitanInterpreter.UltrasonicSetting> AxisUltra){
+        Logger.AddData("Choosing", AxisUltra.get(0).Name);
+        return AxisUltra.get(0);
+    }
 
 
 }

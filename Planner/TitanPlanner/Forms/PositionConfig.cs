@@ -28,13 +28,16 @@ namespace TitanPlanner
         {
            
             InitializeComponent();
-            
+
+
+
         }
 
         private void PositionConfig_Load(object sender, EventArgs e)
         {
             checkBox_unltraEnabled.CheckedChanged += Update;
             LoadData();
+            Update();
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -119,7 +122,7 @@ namespace TitanPlanner
             {
                 UltraSetting _setting = new UltraSetting();
                 _setting.Name         = _ui.Name.Text;
-                _setting.Direction    = _ui.Direction.SelectedText;
+                _setting.Direction    = _ui.Direction.SelectedItem.ToString();
                 _setting.Enabled      = _ui.Enabled.Checked;
                 FieldData.PositionConfig.UltrasonicSettings.Add(_setting);
             }
